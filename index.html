@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="知艾薇亚游戏工作室的游戏与隐私政策。查阅《方块星球大消除》的信息收集、本地存储及广告说明。">
+  <title>知艾薇亚｜游戏与隐私政策</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --background: #f5f7f9;
+      --paper: #ffffff;
+      --ink: #203047;
+      --muted: #526177;
+      --accent: #226b54;
+      --line: #d8e0e7;
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+      font-size: 16px;
+      line-height: 1.85;
+      overflow-wrap: anywhere;
+    }
+    ::selection { background: #cbe9db; color: #163d31; }
+    a { color: var(--accent); text-underline-offset: 0.22em; }
+    a:hover { text-decoration-thickness: 2px; }
+    a:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; border-radius: 2px; }
+    .page { width: min(100%, 808px); margin: 0 auto; padding: 64px 24px 32px; }
+    header { padding-bottom: 36px; border-bottom: 1px solid var(--line); }
+    h1 { margin: 0 0 16px; font-size: clamp(28px, 6vw, 38px); line-height: 1.4; }
+    header p { margin: 0; color: var(--muted); }
+    main { padding: 36px 0 48px; }
+    h2 { margin: 0 0 20px; font-size: 21px; }
+    .games { margin: 0; padding: 0; list-style: none; }
+    .game { padding: 28px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
+    h3 { margin: 0; font-size: 23px; line-height: 1.5; }
+    .version { margin: 8px 0 14px; color: var(--muted); font-size: 14px; }
+    .description { margin: 0; }
+    .policy-link { display: inline-flex; align-items: center; min-height: 44px; margin-top: 16px; font-weight: 650; }
+    footer { padding-top: 24px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+    footer p { margin: 0; }
+    footer a { display: inline-flex; align-items: center; min-height: 44px; }
+    @media (max-width: 480px) {
+      .page { padding: 36px 20px 24px; }
+      header { padding-bottom: 28px; }
+      main { padding: 28px 0 36px; }
+      .game { padding: 22px; }
+      h3 { font-size: 21px; }
+    }
+    @media print {
+      body { background: #fff; color: #000; }
+      .page { width: 100%; padding: 0; }
+      a { color: inherit; }
+      .game { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>知艾薇亚</h1>
+      <p>游戏工作室 · 游戏与隐私政策</p>
+    </header>
+    <main>
+      <section aria-labelledby="games-title">
+        <h2 id="games-title">我们的游戏</h2>
+        <ul class="games">
+          <li class="game">
+            <h3>方块星球大消除</h3>
+            <p class="version">离线单机 · 当前 v1 版本</p>
+            <p class="description">无需账号，游戏本身不收集个人信息。所有进度与设置仅保存在您的设备上；广告入口为明确标注的离线模拟。</p>
+            <a class="policy-link" href="privacy-blockplanet.html" aria-label="阅读《方块星球大消除》隐私政策">阅读隐私政策</a>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer>
+      <p>开发者／运营方：知艾薇亚</p>
+      <p>联系我们：<a href="mailto:tolovelife@foxmail.com">tolovelife@foxmail.com</a></p>
+    </footer>
+  </div>
+</body>
+</html>

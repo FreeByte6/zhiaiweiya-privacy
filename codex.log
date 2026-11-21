@@ -1,0 +1,1654 @@
+Reading additional input from stdin...
+OpenAI Codex v0.171.0
+--------
+workdir: /home/hatch/workspace/taptap-games/privacy-site
+model: gpt-6.1-sol
+provider: OpenAI
+approval: never
+sandbox: workspace-write [workdir, /tmp, $TMPDIR]
+reasoning effort: max
+reasoning summaries: none
+session id: 01a1fecc-de93-7a73-a5d5-1fade34823e1
+--------
+user
+Build a small static privacy-policy website in this directory for a TapTap game studio 知艾薇亚. Read ~/workspace/taptap-block-game/docs/PRIVACY_POLICY.md as the content source. Deliver: (1) index.html - simple studio page listing the games and linking their privacy policies (currently one game), (2) privacy-blockplanet.html - the full privacy policy for 《方块星球大消除》 as clean standalone HTML (inline CSS only, zero external resources, mobile-readable, Chinese), truthful to the actual app: collects NO personal data, no accounts, all progress/settings stored only on-device in localStorage, no network requests in v1, ads in v1 are clearly-labeled offline simulations with no ad SDK and no data sharing; include sections: 信息收集与使用、本地存储、第三方与广告、未成年人、政策变更、联系我们 with contact email tolovelife@foxmail.com, developer name 知艾薇亚, effective date 2026-11-21; (3) TEMPLATE.html - same structure with {{GAME_NAME}}/{{PACKAGE}}/{{DATE}} placeholders for future games. Do not invent data practices the app does not have.
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+warning: Codex is ignoring 3 unrecognized configuration settings. Check for typos or deprecated settings.
+  user (/home/hatch/.codex/config.toml): `disable_response_storage` is ignored.
+  user (/home/hatch/.codex/config.toml): `network_access` is ignored.
+  user (/home/hatch/.codex/config.toml): `windows_wsl_setup_acknowledged` is ignored.
+warning: Codex is ignoring 3 unrecognized configuration settings. Check for typos or deprecated settings.
+  user (/home/hatch/.codex/config.toml): `disable_response_storage` is ignored.
+  user (/home/hatch/.codex/config.toml): `network_access` is ignored.
+  user (/home/hatch/.codex/config.toml): `windows_wsl_setup_acknowledged` is ignored.
+codex
+ 
+codex
+我会先读取现有隐私政策和目录约定，再生成三个纯静态 HTML 文件，并检查内容准确性与移动端可读性。
+exec
+/bin/bash -lc "pwd && rg --files -g 'AGENTS.md' -g '"'!node_modules'"' -g '"'!vendor'"' -g '"'!dist'"' -g '"'!build'"' /home/hatch/workspace /home/hatch/.agents 2>/dev/null" in /home/hatch/workspace/taptap-games/privacy-site
+exec
+/bin/bash -lc 'ls -la && git status --short' in /home/hatch/workspace/taptap-games/privacy-site
+exec
+/bin/bash -lc 'cat /home/hatch/workspace/taptap-block-game/docs/PRIVACY_POLICY.md' in /home/hatch/workspace/taptap-games/privacy-site
+exec
+/bin/bash -lc 'cat /home/hatch/.agents/skills/impeccable/SKILL.md' in /home/hatch/workspace/taptap-games/privacy-site
+ exited 128 in 132ms:
+total 4
+drwxrws--- 1 root nogroup   60 Nov 21 23:50 .
+drwxrws--- 1 root nogroup  118 Nov 21 23:50 ..
+dr-xr-xr-x 2 root root      40 Nov 21 23:50 .agents
+dr-xr-xr-x 2 root root      40 Nov 21 23:50 .aws
+dr-xr-xr-x 2 root root      40 Nov 21 23:50 .codex
+dr-xr-xr-x 2 root root      40 Nov 21 23:50 .git
+-rw-rw---- 1 root nogroup 3130 Nov 21 23:50 codex.log
+fatal: not a git repository (or any parent up to mount point /home)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+
+ succeeded in 109ms:
+---
+name: impeccable
+description: "Use when the user wants to design, redesign, shape, critique, audit, polish, simplify, harden, animate, or otherwise improve a frontend interface: websites, landing pages, dashboards, product UI, components, forms, settings, onboarding, empty states, and native iOS or Android screens. Handles UX review, hierarchy, layout, typography, color, motion, UX copy, accessibility, responsive behavior, edge cases, and capturing or documenting design systems (DESIGN.md, tokens). Also for making bland UI bolder, loud UI quieter, or ambitious visual effects. Not for backend-only or non-UI tasks."
+metadata:
+  version: 4.10.0
+---
+
+This skill gives you the tools and permission to make design that earns the name out-of-distribution craft. Work as an award-winning design director would: production-grade code, a clear POV, a deep grasp of what the client and its users need, and exceptional craft.
+
+Core principles:
+- Finish the job. No hedging, no shortcuts: the deliverable is complete, except assets the user must provide.
+- Scale ambition to the surface's mode (see Modes). Persuade and Experience get full commitment: bold, distinct work with a point of view. On Operate and Read, ambition shows as precision and restraint, and patterns the visitor already knows earn their place.
+- Verify by looking at the rendered result at the sizes it ships at (web: `.agents/skills/impeccable/scripts/impeccable shot <page>`), and batch the checks: fix what one look shows before looking again.
+
+## Setup
+
+1. Run `<skill-base-dir>/scripts/impeccable context` once per session, where `<skill-base-dir>` is the directory that contains this SKILL.md (the skill folder, not a plugin root two levels above it); keep cwd at the user's project. That base directory resolves every `.agents/skills/impeccable/scripts/impeccable <verb>` command in this skill and its references, and `.agents/skills/impeccable/scripts` is the fallback only when the runtime reports no base directory. On a Windows shell without `sh`, call `.agents/skills/impeccable/scripts/impeccable.cmd` instead. The launcher runs a self-contained binary that ships next to it or is downloaded once on first run; no Node or other runtime is required. Pass a named source file or route as `--target <path>`. It loads PRODUCT.md and DESIGN.md (long ones as a map: read the sections your task needs), the matching surface brief, and native-platform guidance when applicable; follow its directives and do not rerun it.
+2. Load the request's playbook: its Commands-table reference for an explicit/implied sub-command, or [reference/new-work.md](reference/new-work.md) for a new surface, a replacement visual world, or a build from an approved comp. Some playbooks come in parts; read the part this request needs in the same step: [reference/new-work-world.md](reference/new-work-world.md) when a visual world is created or replaced (a redesign, a new look, or no established world), [reference/new-work-comp.md](reference/new-work-comp.md) for a build from an approved comp or on a comp-led build path, and [reference/critique-rubric.md](reference/critique-rubric.md) for a critique whose Assessment A runs in this context (a native platform, or no sub-agent tool); a delegated Assessment A gets the rubric's path in its prompt instead. Inspect target and incumbent visual truth before editing. When the app cannot run, start with committed visual-regression goldens or screenshot fixtures; verify target and freshness against current tokens, CSS, components, or assets, resolve conflicts, and compare theme/variant captures.
+3. After resolving analysis and direction, read [reference/craft-floor.md](reference/craft-floor.md) immediately before any UI edit, including small refinements. It carries the quality floor, the absolute bans, and the reflexes no detector catches. Do not load it for planning-only work.
+
+**Launcher unavailable:** On the first refusal or failure, don’t retry; send a separate message **before the next tool call**: “Context loading did not run; I’ll read the existing project context directly.” Then read existing PRODUCT.md and DESIGN.md without inventing missing context, follow applicable steps 2–3, including reading [reference/craft-floor.md](reference/craft-floor.md) immediately before any UI edit, and continue through permitted tools. This applies to planning and editing; launcher failure alone does not block either.
+
+## How to design
+
+- **The brief wins.** Honor pinned aesthetics, eras, materials, fonts, and palettes even when they conflict with a saturated-pattern warning. Redirecting a clear brief toward your taste is failure.
+- **Refinement preserves; redesign replaces.** Refinement keeps the incumbent identity, behavior, copy, and everything outside scope. Ask before replacing factual copy or adding claims. Redesign keeps product truth, content, function, native affordances, and constraints, but treats the old look as evidence and anti-reference; choose a replacement world in new-work and replace DESIGN.md. Never split the difference into polish on the discarded look.
+- **Loaded symbols stay out of the decoration.** A subject's world does not license emblems tied to militarism, supremacy, or hate movements as motifs, badges, or ornament, such as the Rising Sun flag's rays, the Confederate battle flag, or Nazi-era insignia and their stylised variants; reach for that world's neutral forms instead. Content that documents such a symbol as fact stays as it is.
+- **Visual authority is evidence, not a filename.** Missing DESIGN.md alone does not make a project greenfield; new-work decides whether to preserve, expand, or replace the incumbent world.
+
+## Modes
+
+The mode names what the visitor's success looks like on this surface.
+
+- **Persuade:** the visitor decides and acts; design is the product. Landing pages, marketing, campaigns, pricing. Earn attention and action. Ship real imagery when the brief needs it; follow the committed world, not category habit.
+- **Operate:** the visitor completes a task. App UI, dashboards, editors, admin, settings, tools. Scanability, consistency, native expectations, and the real usage scene outrank expression. Brand lives in precise details.
+- **Read:** the visitor understands something. Docs, articles, guides, help, changelogs. Structure for comprehension, then make the reading experience worth staying in.
+- **Experience:** the visitor is inside the work itself. Portfolios, galleries, showcases. Let the artifact lead from the first viewport; the interface recedes.
+
+Choose the mode from the requested surface, not the product, and persist it only in that surface brief. A tool's landing page is still Persuade; a fashion house's documentation is still Read; a docs index is Read, not Persuade. See [new-work.md](reference/new-work.md) for new surfaces and [operate.md](reference/operate.md) for deeper Operate/Read guidance.
+
+## Commands
+
+| Command | Category | Description | Reference |
+|---|---|---|---|
+| `craft [feature]` | Build | Deprecated alias for an ordinary new-work request | [reference/craft.md](reference/craft.md) |
+| `shape [feature]` | Build | Plan UX/UI before writing code | [reference/shape.md](reference/shape.md) |
+| `init` | Build | Capture durable product context in PRODUCT.md | [reference/init.md](reference/init.md) |
+| `document` | Build | Generate DESIGN.md from existing project code | [reference/document.md](reference/document.md) |
+| `extract [target]` | Build | Pull reusable tokens and components into design system | [reference/extract.md](reference/extract.md) |
+| `critique [target]` | Evaluate | UX design review with heuristic scoring | [reference/critique.md](reference/critique.md) |
+| `audit [target]` | Evaluate | Technical quality checks (a11y, perf, responsive) | [reference/audit.md](reference/audit.md) · native: [reference/audit.native.md](reference/audit.native.md) |
+| `polish [target]` | Refine | Final quality pass before shipping | [reference/polish.md](reference/polish.md) |
+| `bolder [target]` | Refine | Amplify safe or bland designs | [reference/bolder.md](reference/bolder.md) |
+| `quieter [target]` | Refine | Tone down aggressive or overstimulating designs | [reference/quieter.md](reference/quieter.md) |
+| `distill [target]` | Refine | Strip to essence, remove complexity | [reference/distill.md](reference/distill.md) |
+| `harden [target]` | Refine | Production-ready: errors, i18n, edge cases | [reference/harden.md](reference/harden.md) |
+| `onboard [target]` | Refine | Design first-run flows, empty states, activation | [reference/onboard.md](reference/onboard.md) |
+| `animate [target]` | Enhance | Add purposeful animations and motion | [reference/animate.md](reference/animate.md) |
+| `colorize [target]` | Enhance | Add strategic color to monochromatic UIs | [reference/colorize.md](reference/colorize.md) |
+| `typeset [target]` | Enhance | Improve typography hierarchy and fonts | [reference/typeset.md](reference/typeset.md) |
+| `layout [target]` | Enhance | Fix spacing, rhythm, and visual hierarchy | [reference/layout.md](reference/layout.md) |
+| `delight [target]` | Enhance | Add personality and memorable touches | [reference/delight.md](reference/delight.md) |
+| `overdrive [target]` | Enhance | Push past conventional limits | [reference/overdrive.md](reference/overdrive.md) |
+| `clarify [target]` | Fix | Improve UX copy, labels, and error messages | [reference/clarify.md](reference/clarify.md) |
+| `adapt [target]` | Fix | Adapt for different devices and screen sizes | [reference/adapt.md](reference/adapt.md) · native: [reference/adapt.native.md](reference/adapt.native.md) |
+| `optimize [target]` | Fix | Diagnose and fix UI performance | [reference/optimize.md](reference/optimize.md) |
+| `live` | Iterate | Visual variant mode: pick elements in the browser, iterate on alternatives | [reference/live.md](reference/live.md) |
+| `generate [n] [action] [element]` | Iterate | Variants, versions, or alternatives of a named element to choose from in the live browser; no manual picking | [reference/generate.md](reference/generate.md) |
+
+Routing:
+
+- **No argument:** read [routing.md](reference/routing.md) and present its context-aware menu; never auto-run a command.
+- **Explicit or clearly implied request to run a command:** load its reference (native variant on native platforms) and follow it. Ask once if two commands fit.
+- **Workflow or command-selection question:** read [Workflow questions](reference/routing.md#workflow-questions).
+- **Otherwise:** treat the request as general design work. Missing PRODUCT.md routes a new surface or replacement world through init, then new-work; a narrow refinement of existing code proceeds on the incumbent implementation as `impeccable context` directs, offering init afterward rather than blocking on it.
+- `teach` aliases `init`. `craft` is a deprecated alias for ordinary new-work and adds nothing. `shape` owns task discovery, then enters new-work only for visual-world and surface-concept decisions.
+
+After init writes PRODUCT.md, resume without rerunning `impeccable context`; init loads the native platform reference itself when the platform it recorded is `ios`, `android`, or `adaptive`.
+
+**Pin / Unpin:** `.agents/skills/impeccable/scripts/impeccable pin <pin|unpin> <command>` creates or removes a standalone `$<command>` shortcut. Report the script's result concisely; relay stderr verbatim on error.
+
+**Hooks:** `$impeccable hooks <on|off|status|ignore-rule|ignore-file|ignore-value|reset>` manages the design detector hook for this project (auto-runs the detector after UI file edits and surfaces findings). Load [reference/hooks.md](reference/hooks.md) when the user invokes it with any argument.
+
+**Doctor:** `$impeccable doctor` reports and repairs drift between this project's Impeccable artifacts (PRODUCT.md, DESIGN.md and its sidecar, config, surface briefs, the hook) and what this version reads. Load [reference/doctor.md](reference/doctor.md) when the user invokes it, or when they ask what is out of date, stale, or needs refreshing. A `CONTEXT_STALE` directive in Setup's output is the cheap subset of the same report; act on it there per its own instructions rather than running doctor unasked.
+
+**Foundations:** `$impeccable foundations` runs `.agents/skills/impeccable/scripts/impeccable foundations` and walks the user through the product-foundations roadmap (secrets, 404 page, icons, CI and more); `$impeccable foundations <id>` fixes that one item. Load [reference/foundations.md](reference/foundations.md) when the user invokes it.
+
+**Never repair drift as a side effect of a design task.** A `CONTEXT_STALE` finding is reported, not acted on, unless the user asks. The one exception is a finding marked `auto`, which the next write to that file performs anyway.
+ succeeded in 160ms:
+# 《方块星球大消除》隐私政策
+
+生效日期：2026-11-21  
+更新日期：2026-11-21  
+开发者／运营方：知艾薇亚
+
+## 一、适用范围与核心说明
+
+本政策适用于知艾薇亚提供的《方块星球大消除》Web／H5游戏及Android游戏应用。请在使用前阅读本政策；您可以随时查看本政策并按下文方式联系我们。
+
+**当前v1为离线单机游戏，无账号、无登录、无内购，不通过游戏收集、上传或出售您的个人信息。游戏记录仅保存在您的设备本地。当前版本未接入真实广告SDK，广告入口使用明确标注的离线模拟，不请求真实广告，也不采集设备或广告标识符。**
+
+未来如接入广告SDK，我们会先更新政策、披露具体SDK及其数据处理规则，并提供相应选择。第五条是对未来变化的预告，不表示当前已经接入，也不构成您对未来数据处理的授权。
+
+## 二、当前版本不收集的信息与权限
+
+当前v1不要求您提供姓名、手机号、身份证号码、邮箱或任何账户资料；不读取通讯录、照片、通话记录、短信、精确位置、麦克风或摄像头，不采集设备唯一标识符、广告标识符、安装应用列表或用于跨应用跟踪的信息。
+
+游戏不设置服务器账号、云存档、联网排行榜、聊天、社交分享、行为分析或远程崩溃上报服务。游戏逻辑和模拟广告不发起网络请求，不使用用于广告跟踪的Cookie或网络追踪器，也不为游玩申请上述敏感权限。音效与震动开关仅用于本机体验。
+
+您访问TapTap商店、下载游戏，或使用浏览器、操作系统本身的服务时，相应平台可能按照各自的政策处理信息；这些平台独立提供的服务不属于游戏本体的数据收集。
+
+## 三、本地保存的内容、用途与期限
+
+游戏使用浏览器的localStorage或Android WebView所属应用的本地存储保存以下非联网游戏记录：
+
+| 本地内容 | 用途 |
+| --- | --- |
+| 最高分、关卡解锁与闯关进度 | 展示个人成绩，继续本机的星球地图进度 |
+| 每日挑战日期、种子相关进度与完成标记 | 提供当日挑战并记录是否完成 |
+| 道具数量与奖励领取状态 | 正确使用道具，避免同一奖励重复领取 |
+| 音效、震动等设置 | 保留您选择的游戏体验 |
+| 新手引导状态、模拟广告频次与奖励防重复记录 | 避免引导中展示广告，执行展示限额与奖励规则 |
+
+这些记录不含账号身份资料，不发送给我们或第三方，也不用于跨设备识别。我们不提供云端同步或跨设备恢复。记录通常保存至您清除站点／应用数据、卸载应用，或浏览器／系统清理本地存储；我们没有服务器副本可供恢复。操作系统或浏览器自行提供的备份、还原功能由其设置和政策管理。
+
+## 四、共享、转让、公开披露与跨境提供
+
+当前v1没有向我们上传的个人信息，不向第三方共享、出售、转让或公开披露游戏内的个人信息，也不通过游戏进行个人信息的跨境传输。当前第三方广告、统计分析与跟踪SDK接入清单为：**无**。
+
+未来如发生个人信息处理范围、合作方或传输安排的变化，我们会在实施前说明具体情况，并依法履行告知、取得同意等义务，不以本条概括授权代替具体披露。
+
+## 五、未来接入真实广告SDK时的说明与选择
+
+未来可能选择TapTap广告（TapADN）或穿山甲广告（CSJ）作为广告服务提供方。当前二者均未接入。真实广告需要联网，但基础单机玩法仍可离线使用。
+
+在实际接入的版本中，广告SDK在完成必要告知、取得相应同意并初始化后，可能在初始化、加载、展示及广告交互过程中采集以下信息：
+
+- 设备／广告标识符，例如Android ID、OAID；具体是否处理及能否关闭取决于所选SDK版本与实际配置。
+- 设备型号、系统版本、应用包名和版本、网络类型与IP地址等运行信息。
+- 广告展示、点击、奖励验证、错误或性能信息，用于广告投放、效果统计、反作弊与服务稳定性。
+
+设备标识符及上述相关信息可能构成个人信息，不能因为没有姓名或账号就视为“无个人信息收集”。这份可能范围不代表当前采集，也不能代替正式接入清单。
+
+**启用前我们会在游戏内隐私说明中列明实际SDK名称、版本、服务提供方及联系方式、处理目的、信息种类、采集方式与时机、保存期限、存储地点及权利行使方式，并提供第三方隐私政策链接。需要单独同意的事项将单独征求同意。**
+
+您的选择遵循以下规则：
+
+1. 同意前不初始化SDK、不预加载广告、不读取或发送相关标识符。不同意不会影响经典、每日挑战和星球闯关等基础玩法；涉及真实广告的可选奖励及插屏不启用。
+2. 同意广告数据处理，不等于同意每次观看激励广告。复活、补充道具等入口仍须由您主动选择，提前说明奖励；取消观看不扣除已有道具或进度。
+3. 个性化广告默认关闭。若将来提供此功能，会另行说明并提供独立选择；关闭个性化不代表SDK完全不处理信息，非个性化广告也可能处理投放所需的信息。您可直接选择不启用真实广告。
+4. 接入SDK的版本会在“设置→隐私→广告与隐私”提供撤回选择。撤回后停止新的SDK调用和广告请求，清理可清理的缓存；不能立即停止相关处理的SDK将不启用。对第三方已经依法处理的数据，可通过披露的渠道或联系我们申请查阅、复制、删除等，我们会协助处理。
+5. 不因广告申请定位、通讯录、电话状态、相机、麦克风或安装应用列表等与核心玩法无关的可选权限；SDK的实际最小采集范围会据实披露，无法满足保护要求时不启用该SDK。
+
+候选服务的政策供您了解，当前不代表发生数据共享：[TapADN隐私政策](https://ssp.taptap.cn/privacy)、[穿山甲广告SDK隐私政策](https://www.csjplatform.com/privacy/partner)。
+
+## 六、您的管理与删除方式
+
+您无需注册账户，因此无需办理账户注销。音效、震动等体验设置可在游戏设置中修改。
+
+如需删除本地记录，Web版可通过浏览器的站点设置清除本游戏的站点数据；Android版可通过系统“设置→应用→方块星球大消除→存储→清除数据”操作，具体名称以设备系统为准。清除后，本机分数、进度、道具、设置及模拟广告记录将一并重置，通常无法恢复。仅退出游戏不会删除记录。
+
+您可通过第九条渠道咨询个人信息处理情况，或提出查阅、复制、更正、删除、撤回同意等请求。当前游戏内记录只在您的设备上，我们无法远程读取或代为修改；我们会说明可用的本地操作方式。未来涉及SDK处理的信息，将按届时披露的具体渠道协助您行使权利。
+
+## 七、未成年人保护
+
+游戏内容面向全年龄，无暴力、血腥、赌博、内购或付费抽奖。建议未成年人在监护人指导下阅读本政策并合理安排游戏时间。
+
+当前v1不收集未成年人个人信息。未来真实广告对已知未成年人及年龄未知的用户默认关闭，不进行行为画像或个性化广告推送，不以领奖、复活或连续签到诱导未成年人授权、观看广告或消费。不会为解锁广告要求提交身份证或生日。
+
+如果未来确有必要处理不满十四周岁未成年人的个人信息，将先制定专门的处理规则，并在取得父母或其他监护人同意后依法处理；不能满足条件时不启用相关处理。监护人如有疑问或认为存在不当处理，可联系我们核查。
+
+## 八、安全与政策更新
+
+我们按最小必要原则设计本地存储，不建立个人信息数据库，不上传存档。请使用您信任的设备并管理好浏览器／系统权限；本地记录不应存放身份证号、联系方式等敏感资料。
+
+政策更新会标明生效日期。涉及新增SDK、处理目的、信息种类、接收方或其他重要变化时，我们会在变更处理发生前显著告知，依法重新征求必要同意。您可拒绝新增的广告数据处理并继续使用基础离线玩法。
+
+## 九、联系我们
+
+开发者／运营方：知艾薇亚  
+隐私联系邮箱：【待填写：有效的隐私联系邮箱】  
+联系说明：请在公开发布前以可正常收件的邮箱替换上述占位内容。
+
+请在来信中说明问题及您希望的处理方式，不必提供身份证号码或其他敏感信息。您主动来信提供的邮箱、问题描述及附件，仅用于沟通和处理该请求，按处理所需的最短期限保留；这类主动联系不属于游戏自动采集。我们将在收到请求后15个工作日内答复；需要进一步核实的，会说明原因和处理进度。
+
+ succeeded in 3479ms:
+/home/hatch/workspace/taptap-games/privacy-site
+/home/hatch/workspace/rea-video/AGENTS.md
+/home/hatch/workspace/tmp/skills-BMcAv0/AGENTS.md
+/home/hatch/workspace/tmp/pixslide-templates-tools/ppt-master-d8f704bc8c1552d53a8769b55d1eecd22c782042/AGENTS.md
+/home/hatch/workspace/refs/codex-ppt-skill/AGENTS.md
+/home/hatch/workspace/tmp/pixslide-font-cargo/registry/src/index.crates.io-1949cf8c6b5b557f/flate2-1.1.11/AGENTS.md
+/home/hatch/workspace/tmp/pixslide-fingerprint/codex-src/codex-rs/tui/src/bottom_pane/AGENTS.md
+/home/hatch/workspace/tmp/pixslide-fingerprint/codex-src/codex-rs/exec-server/src/sandbox_integrity/AGENTS.md
+/home/hatch/workspace/tmp/pixslide-fingerprint/codex-src/codex-rs/code-mode-host/AGENTS.md
+/home/hatch/workspace/tmp/pixslide-opt-validation/queue-9bb/batch10/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/flate2-1.1.11/AGENTS.md
+
+codex
+ 
+**Checking ancestor instructions**
+**Checking package metadata**
+codex
+我会使用 impeccable 技能处理页面排版与可读性。源文件已明确说明 v1 的离线行为；我会保留完整政策内容、填入指定邮箱，并清楚区分当前模拟广告与未来可能接入的真实广告。
+exec
+/bin/bash -lc 'cat /home/hatch/.agents/skills/impeccable/reference/new-work.md /home/hatch/.agents/skills/impeccable/reference/new-work-world.md /home/hatch/.agents/skills/impeccable/reference/init.md' in /home/hatch/workspace/taptap-games/privacy-site
+ succeeded in 0ms:
+# New visual work
+
+Use this flow for a new surface or a replacement visual identity. PRODUCT.md owns product truth. DESIGN.md owns durable visual decisions. A surface brief keeps strategy that belongs to one route or artifact. Complete [init.md](init.md) first when PRODUCT.md is missing; a missing DESIGN.md does not route back to init.
+
+For a chosen comp’s region map, see [region-map.md](region-map.md) for the command sequence and schema.
+
+## 1. Decide what is already true
+
+Read DESIGN.md, representative code, tokens, components, and assets.
+
+- **Redesign:** preserve product truth, content, function, constraints, and explicit brand commitments; replace the old visual world rather than polishing it. The old look is evidence of what the subject is, not authority over what it becomes.
+- **Established world:** inherit it. A missing DESIGN.md does not erase a coherent identity already in code; document that identity instead of inventing a replacement.
+- **Incomplete brand:** preserve confirmed assets and recognizable traits, then expand the system with the user for this surface.
+- **Seeded world:** DESIGN.md's frontmatter names a catalog `world:` (written by `impeccable world <id>`) and no code carries it yet; styles that predate the seed, such as a starter template's CSS, do not carry it. The person already chose this world, so it is the established world even when the boot reports no visual authority: never roll, re-pick, or invent a replacement on your own initiative, but an explicit request from the person for a redesign or a different world overrides this and is a redesign (step 4 of **Create or replace the visual world**, in [new-work-world.md](new-work-world.md)). Its prose and colours are direction rather than finished tokens; the first build resolves them and `document` records the real system afterwards. The surface roll then deals structures only and names the seeded world; it prints no other worlds. A whole new surface follows the established-world path below, and with no page to screenshot yet, the world's `Reference image:` line in DESIGN.md is the comps' anchor. A code-led build has no comps, so look at that image before writing code: download it into the workspace under `.impeccable/reference/` (never `.impeccable/mocks/`, where every image counts as a comp) and open the relative path, since a viewer that only reads files or runs sandboxed never receives a URL. It is the one picture of this world.
+- **No visual authority:** create a new world with the user.
+
+A section, component, feature, or state inside an established surface inherits that surface. Never turn a local addition into a new identity exercise.
+
+## 2. Ask what will change the work
+
+Before implementation, get the user's answer through the structured question tool when available. Ask two or three related questions; a precise request needs only a compact confirmation. Skip settled facts, not the confirmation: DESIGN.md settles the visual world, not this surface's purpose or concept.
+
+- **Persuade:** who must act, what they should believe, which real proof, content, or assets earn that belief.
+- **Operate:** the task, information, important states, frequency, constraints.
+- **Read:** the reader's question, source material, structure, wayfinding.
+- **Experience:** what leads, how exploration unfolds, which interaction or transition matters.
+
+Across modes, ask what success looks like, what must remain untouched, and what would make a polished result feel wrong. Never ask for CSS values or canned aesthetic lanes. On a new or replacement world these are product questions only: propose no look of your own before concept-seed has run, because a direction named in a question is the one the answer confirms.
+
+## 3. Choose the right amount of invention
+
+### Extend an existing surface
+
+Inherit its world and composition. Resolve only the new purpose, content, hierarchy, states, interaction, and how the addition joins the surrounding experience. No concept tournament, and no DESIGN.md change unless the user approves a durable system change.
+
+### Create a whole surface inside an established world
+
+Keep the visual system fixed. Derive five to seven materially different structures from the content, task, and user behavior, ordered by resonance. For a genuinely open whole page, screen, or flow, run:
+
+`.agents/skills/impeccable/scripts/impeccable concept-seed --scope surface --mode <mode>`
+
+The script deals three of your structures; the dice pick which three reach the user, breaking the ranking rut while the user keeps a real choice. Present them on the decision page as full cards of equal salience, the dealt lead under kicker THE ROLL, with steer and re-roll; the user locks one. Each card declares `kind`: `assigned` on the dealt lead, `dealt` on the other dealt structures, and `challenger` with its `catalogId` (the SOURCE ID) on a challenger that won its place. No canon card and no pick card at surface scope: the world is settled, so every card visualizes composition, not identity. With image generation and a comp-led build path (the path the PRESENTATION block printed for this surface; **The build path of a decision round** below), each card declares a `comp` under `.impeccable/mocks/decision/`, generated after serving, in reading order, under [visualize.md](visualize.md)'s comp discipline and the MODE RULES block concept-seed printed for this surface. Anchor each comp on the established identity: pass a screenshot of a representative existing page (on a seeded world with no page yet, the image its DESIGN.md names under `Reference image:`) as a reference image (the harness image tool's input image, or `impeccable generate-image --ref`) with a short prompt in visualize.md's shape; prose paraphrases of a design system drift, pixel references do not. Without image generation, or on a code-led round, each card carries an HTML sketch of the first viewport, declared as its `html`, which the page draws as a skeleton; the PRESENTATION block names its shape, and a card without one falls back to a `wireframe` schematic (`impeccable serve-question --schema`). Locking a card is the approval and sets the build path: a locked comp builds comp-led with that comp as the approved comp, discharging [visualize.md](visualize.md)'s three-option round with no second approval point; a locked sketch or wireframe builds code-led, its ambition carried by the direction contract, and a locked sketch is the composition the build matches. Never run the script for a local extension or a precisely specified narrow request; shape those directly.
+
+### Create or replace the visual world
+
+Read [new-work-world.md](new-work-world.md) now and follow it: this path's steps, the roll and the decision page live there. Come back for step 4 once a direction is locked.
+
+### The build path of a decision round
+
+The execution contract, comp-led or code-led, is never asked inside a round; the page's toggle handles the exception. An Operate or Read surface is code-led whatever the project records: working screens and documents come out better built than pictured. A Persuade or Experience surface takes the recorded default: read it from `.impeccable/config.json` (`buildPath`), the gitignored `.impeccable/config.local.json` winning where one machine differs from the team's committed value; with neither, comp-led is the default whenever image generation exists. concept-seed's PRESENTATION block prints the path for the surface in hand; follow that line. Author every direction and surface payload with `buildPath: { "value": <default>, "toggle": true }`; the page renders a footer toggle with the trade stated beside it, and the ANSWER returns `buildPath` plus `buildPathFlipped`. A flipped value binds that session only and is never written back, with one exception, the only question this preference ever earns inside a round (init records it up front on projects that get the chance): when `buildPathFlipped` comes back true on a Persuade or Experience surface in a project that records no `buildPath` at all, ask once after the round closes whether to keep it as the standing default; a flip on an Operate or Read surface is one round's choice and is never offered for recording. Either answer writes `.impeccable/config.json`; the answer picks the value, never whether to record one. Yes writes the flipped value; "no, just this once" writes the value they flipped away from, the standing default they just confirmed by declining. Ask on the flip, never on the untouched default: a user who left the toggle alone told you nothing. A declined offer nothing writes down is an offer the next session makes again. When the user asks in words to change the standing default, update the file without asking. **Comp-led**: the chosen card's comp is law, generated before building when it does not yet exist, and the finish review audits the build against it; boldest composition on the table, fix rounds expected, and the comp is non-optional, no silent skipping. **Code-led**: no comp of this page and no apology for it; each card's HTML sketch is what the user chooses from, and the picked one is the composition the build matches and the finish review audits; the QUALITY BAR boards still calibrate finish, and the ambition moves into the written contract, the FIRST VIEWPORT block plus a named signature interaction and motion grammar, which the finish reviewer audits in behavior; code-led is not a discount on commitment. A code-led round still declares each card's comp path as a flip reserve: when the user flips the toggle to comp mid-round, `--wait` returns once with BUILD PATH FLIPPED while the page shimmers the slots; generate each open card's comp into its declared path then, lead first, and wait again. The flip back is free, and a comp that already rendered rides at the finish review as the critique reference. Without image generation there is no toggle and no choice: code-led is the only path, stated in one line rather than asked. The structured-tool fallback has no toggle either: it builds on the path the PRESENTATION block printed for the surface and asks nothing about the build path. The old two-card execution-contract round is retired; `followup: true` remains the general mechanism for delivering any later round over the same table via `--update`.
+
+## 4. Commit the world
+
+Pick a color strategy before picking colors: Restrained (neutrals tinted from the world plus one accent; common on screens people operate or read, where the mode's rules still ask colour to do real jobs), Committed (one saturated color carries 30-60% of the surface), Full palette (3-4 named roles), or Drenched (the surface IS the color). Persuade and Experience surfaces have permission for the bolder strategies; take them when the brief allows. Color commits at page scale: fields that own whole regions, not accents scattered over a neutral ground. Dark or light is never a default: write one sentence of physical scene (who uses this, where, under what light) and let it force the answer.
+
+Choose faces like objects from the subject's world, in the mode's register. Operate and Read surfaces are well served by system stacks and workhorse UI faces; Persuade and Experience surfaces want faces with a point of view, and these training-data defaults mean you stopped looking: Fraunces, Playfair Display, Cormorant, Lora, Crimson, Newsreader, Syne, Space Grotesk, Space Mono, IBM Plex, Inter-as-display, DM Sans, DM Serif, Outfit, Plus Jakarta Sans, Instrument Sans. Naming one of these faces anyway requires a reason no other face could satisfy, and a subject association is never that reason: books wanting a serif, bookshops wanting hand-lettering, and tech wanting a mono are the associations the list exists to break.
+
+Calibration: AI-generated interfaces cluster around a few looks regardless of subject: warm cream ground, high-contrast serif display, and a terracotta or signal-red accent; near-black with one neon accent and glowing edges; broadsheet-editorial hairlines, italic display serif, and small tracked mono labels; flat saturated ink with black boxes, hard offset shadows, and heavy condensed display type. All are legitimate when the brief calls for them. Where the brief leaves the aesthetic free, landing in one means the self-check failed: if someone could guess your aesthetic from the category alone, or from category-plus-avoidance, rework until neither answer is obvious. Energy is not the enemy of trust: a brief's negative constraints (no gamification, no hype) rule out those devices, not exuberance, and adjectives describing the product's behavior (quiet support, calm coaching) do not dictate the surface's energy. A bookish, warm, or child-facing subject does not soften the calibration: book cloth, thread, jackets, endpapers, and shelf ephemera span the whole saturated spectrum, and cream paper is the smallest corner of that world; landing on cream plus serif for a book subject is the default wearing the subject's clothes. A brief-pinned world pins the world, not its softest rendition: the pinned world's full material range stays in play, and a rendition matching what any model ships for that world failed the self-check at execution rather than selection.
+
+## 5. Record the decision
+
+Before code, record the chosen direction as a development-only contract under `## Direction contract` in the relevant surface brief. A direction contract is durable route or artifact strategy, so create or update the brief even when no other surface strategy needs persistence. Use six short blocks, roughly 150 words; do not spend tool calls counting words. THESIS: the one idea this surface owns and the category-default arrangement it refuses. OWN-WORLD: the palette and component language, specific enough to be recognizable with all content removed. STORY: what the visitor understands, believes, and does. FIRST VIEWPORT: the exact composition, what is where and at what scale, and where the primary action sits. FORM: the chosen form, its position on your ordered list, and the SEED REFERENCE concept-seed printed (`seed:` and 16 hex), never the raw seed key: the brief is committed, and on this machine the reference stands in for the key wherever a command takes one. When the roll printed SEED REFERENCE unavailable, write `seed: none (unavailable)` instead, and nothing else. When a direction pinned whole skipped the roll, write `seed: none (pinned)` in place of both the list position and the reference, followed by the quoted words that pin it. Close with one more line, FINISH: the run's exit condition, verbatim "unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance". The surface brief is the reminder later agents reload across edits and sessions: a page that looks complete with the FINISH line undischarged is not done, it is abandoned at the finish line. If a block reads like a mood, the direction is not decided yet; the finishing review audits the render against this contract.
+
+Never copy the direction contract into implementation source or any browser-delivered artifact. This includes HTML or framework comments, hidden DOM, `<template>` elements, `data-*` attributes, rendered JSX or TSX output, serialized props or state, React Server Component payloads, client bundles, metadata or JSON-LD, accessibility-only text, and files served beside the artifact. A compiler or optimizer removing development metadata is not a safety boundary. Reviewers and documenters receive the contract from the surface brief.
+
+On a new or replacement world, DESIGN.md is written at finish, from the built world, by the shipped documenter (section 7); a rulebook written before the build gets defended against reality instead of describing it, and hands the design-system detector an unstable target. A new world shipped with no DESIGN.md is still an incomplete run. An ordinary extension does not rewrite DESIGN.md.
+
+Read the existing surface brief before updating it:
+
+`.agents/skills/impeccable/scripts/impeccable surface-brief read <primary-target>`
+
+`.agents/skills/impeccable/scripts/impeccable surface-brief write <primary-target> <body-file> [related-target ...]`
+
+After writing, read the brief once more and verify that all six contract blocks and the seed reference (or `seed: none (unavailable)` when the roll printed that, or `seed: none (pinned)` when a direction pinned whole skipped it) are present before building.
+
+Keep the brief small: scope and visitor mode; audience, job, action/task, proof/content, and constraints; chosen direction and memorable moment; unresolved decisions. Do not copy global product truth or DESIGN.md tokens into it.
+
+On a comp-led build, whenever any image generation is available (a harness-native tool or the API fallback `impeccable context` reports), the locked direction is visualized before it is built, never skipped: load [visualize.md](visualize.md) and follow it, three compositional options put before the user for approval, the chosen card's decision comp plus two variations. This step is proven to produce the most compositional and ambitious work. A comp locked in a surface-scope structure round has already discharged this round (Create a whole surface inside an established world, above). On a code-led build the comp round is skipped by contract, never by drift: the ambition it would have carried lives in the direction contract's FIRST VIEWPORT block and named signature interaction, and the finish reviewer audits those promises in behavior.
+
+For `shape`, return the selected direction to [shape.md](shape.md) and stop before persistence or implementation.
+
+## 6. Build with full commitment
+
+Build the assigned direction, not a safer interpretation of it. The form supplies structure, reading order, component conventions, and native motion; the product supplies every fact. Commit every atom: nav, buttons, inputs, and links are rebuilt in the form's vocabulary, and a stock component inside a committed form is a lapse. Land the first build fully committed; the passes that follow exist to make the committed thing clear and effective, never to dilute it. In unattended work, the safe rendition is the known risk.
+
+### Comp-led: the comp is a measured contract
+
+On a comp-led build, read [new-work-comp.md](new-work-comp.md) before writing the spec or any code, and follow it: the measured contract, the spec, and the build-phase gates live there.
+
+### Both paths
+
+- **The first viewport is a thesis, not a header.** Demonstrate the mechanism immediately, at the scale the form has in life; do not trap the concept inside a standard hero or card shell. The memory test: if someone left after one viewport, what would they describe an hour later? If the honest answer is a mood, the concept has not committed yet.
+- **Prove, don't claim.** Show the subject doing its job: the interface at work, the mechanism dramatized, specifics a competitor could not copy-paste. Demonstration data is design material: author it at full fidelity and label it synthetic; claims stay uninventable.
+- **Author the assets; never substitute chrome.** Great surfaces live on carefully made content: names, entries, copy, covers, thumbnails, textures. In greenfield work every blank the ask round left open is yours to author at production fidelity; content is authorable, claims are labelable, no section is omittable. Gradients, glass, generic icon tiles, and many-vertex `clip-path` polygons where an authored asset belongs are the gap wearing chrome; the detector flags the last two.
+- **Draw a print material in its own technique.** On a code-led build, a world whose illustration is engraved, etched, or pen-and-ink is drawn as line: strokes carry the form, hatching (SVG patterns clipped to each shape) carries the tone, and colour sits inside the lines as a translucent wash. Flat fills under a thin outline read as clip-art, which the finish reviewer sends back for a rebuild. Use the world's own assets or one drawn subject per plate; never write a drawing engine.
+- **Build the form's web leverage.** When the chosen world names a technique (canvas, WebGL, view transitions, generative motion), build the technique itself, not a static imitation of it.
+- **Pace the scroll like a studio.** Vary density, scale, image, motion, and quiet inside one grammar; a dense passage earns a quiet one, and the page ends anchored by a real close. One spacing rhythm throughout, with more space above a heading than below it.
+- **Use real, verified imagery when the brief implies it.** Search for the subject's physical object rather than the category; one decisive photo beats five mediocre ones. Verify stock URLs resolve.
+- **Author motion as material.** Give the page the form's native motion once, orchestrated, rather than scattered hover effects. Bound expensive effects and keep content visible by default.
+
+Preserve semantics, accessibility, performance, responsiveness, project conventions, and working behavior.
+
+## 7. Inspect and finish
+
+Inspect the surface's target sizes in one capture pass per breakpoint. On the web, `.agents/skills/impeccable/scripts/impeccable first-viewport <page> --thesis <FIRST VIEWPORT's selector> --action <primary action's selector> --capture .impeccable/review` is that pass: it writes `desktop.png` and `mobile.png` and checks the fold, gaps, sample labels (`--figures-supplied` for figures the user gave) and a dead action; build no screenshot harness of your own. On a native platform (`ios` / `android` / `adaptive`), the shipped device classes per OS, captured from the simulator or emulator the way the platform reference's Verifying the build section describes. When the harness reports the user's actual viewport (an in-app browser's size, a named resolution), add that width to the set: the width that breaks is the one the user sees first. On anything interactive, one more pass drives every interaction and reachable state (open, closed, hover, focus, error, empty, overlong content) and checks each for overlap and clipping, not only the resting screen. Critique the render against the user's request, then walk the direction contract over the captures, as the finish reviewer will: first-viewport passes; every action STORY promises has a working element; every subject drawn in code reads at a glance, at its shipped size, as what it depicts. Fix material gaps in one batch, then confirm once: rerun first-viewport on the web, recapture once on native; no per-tweak captures. No inspection limit closes an open build-phase gate: it stays open until it passes or the route it names is taken. On a comp-led build, run `.agents/skills/impeccable/scripts/impeccable comp-diff --comp <approved comp> --build .impeccable/review/desktop.png --spec .impeccable/build/spec.json --out-dir .impeccable/review/diff/final` and read its region rows and paired crops as the critique: a region it scores missing or contradicted is a fix whatever the page looks like from memory. Never judge fidelity from one full-page thumbnail; it hides exactly the failures that matter. On a Persuade surface, verify the mode did its job: a first-time visitor should know what this is, why it matters, and what to do within seconds, in the form's own vocabulary.
+
+A capture is evidence only when it is valid, and you validate before you send. Settle or disable entrance motion first: an element hidden by animation timing reads as a missing element and gets fixed into a regression. Capture full-page shots from the document top. Capture the comp comparison at the comp's own pixel dimensions. Then open every file once and confirm it shows what its name claims: no black or blank regions, no wrong section behind a right filename, no half-loaded state. A malformed capture sent onward costs the whole round; the reviewer answers it with `disposition: recapture` and nothing it reviewed binds.
+
+After that confirmation the build thread's polishing is over: no further defect hunts, micro-edit scripts, or rebuilds here (an open build-phase gate is not a defect hunt; it closes as above); whatever remains ships through the handoffs, where a fresh context does the finding better and cheaper. On the web, where this harness runs no design hook, run `.agents/skills/impeccable/scripts/impeccable detect --json` on the changed targets once here, fix what is mechanical, and pass the remaining findings to the reviewer; a hookless web build that skips this ships every tell the hook exists to catch. A native platform skips the detector entirely: it reads HTML and CSS and has no verdict on native code, so the reviewer's floor check is the only slop gate and the input packet says so. Capture the screenshots into `.impeccable/review/`, one file per captured viewport (on the web, `desktop.png` and `mobile.png`, plus `user-<width>.png` whenever the user's viewport joined the inspected set; on native, one per device class, such as `phone.png` and `tablet.png`, suffixed per OS on adaptive), creating that directory when the harness does not; the paths you pass the reviewer are its spec, every viewport you inspected is named required in the packet, and that directory is where it looks when a passed path is missing.
+
+Then spawn the shipped finish reviewer, `impeccable-finish-reviewer` (`impeccable_finish_reviewer` in codex; `/impeccable-finish-reviewer` in Cursor; on GitHub Copilot say "Use the impeccable-finish-reviewer agent"), with the original request, confirmed answers, the artifact path, the screenshot paths, the direction contract, existing hook findings, the QUALITY BAR card and approved comp paths (a code-led build has no approved comp; the chosen decision comp rides in that slot as the critique reference, named as such), on a comp-led build the build state (`.impeccable/build/state.json`), the spec, and the diff directories (`.impeccable/review/diff/hero/` and `.impeccable/review/diff/final/`, whose side-by-side, heatmap, region pairs, and `report.json` are the fidelity evidence), the craft-floor reference path, one line saying whether the build was code-led and whether image generation existed, and on a native platform the platform reference path(s), [ios.md](ios.md) / [android.md](android.md), both on adaptive, plus one line saying no detector ran, so the reviewer judges in the platform's conventions rather than the web's. The reviewer has no browser; screenshots you fail to pass are checks it cannot run. Never read the shipped agents' definition files before spawning; the harness loads them at spawn, and you owe only the input packet. Wait on any agent with one long timeout rather than a loop of short polls, and spend the wait on the next independent step. Verify the return carries the five contract sections (a recapture return carries one, its recapture list); on an empty or thrashed return, respawn once with the same inputs. This review never runs inside the build thread and never inherits it: spawn the reviewer fresh, with no forked conversation history (`fork_turns: 0` in codex); a reviewer that inherits your transcript inherits your framing, your optimism, and your abstractions, and everything it needs travels in the inputs above. Only a harness with no subagent capability at all substitutes a fresh in-thread pass after stepping fully out of the build context, run from [degraded/finish-reviewer.md](degraded/finish-reviewer.md), and a substituted or failed-and-replaced review is disclosed in one line at finish, never silently.
+
+Act on the disposition word; there are exactly four. **recapture**: the evidence failed, not the build. Recapture what the return names under the capture-validity rules, then run a full review over the new evidence. A review conducted on invalid evidence binds nothing, and a verdict pass may never follow it. **rebuild**: fidelity failed wholesale, not in patches. Skip the fix batch and execute the rebuild immediately: re-derive the named regions, produce the named assets, and send the result back for a fresh full review, never a verdict pass; a rebuild replaces regions wholesale, so the whole matrix runs again over the recaptures. Tell the user what is happening rather than asking permission to fix a failure. Consult the user only on a second rebuild directive, both verdicts on the table, or when rebuilding would discard content the user approved. **ship**: nothing is owed; report the verdict at its scope and continue to the documenter. **fix**: apply the material fixes in one batch, rebuild once, and recapture the same viewports over the same files. On a comp-led build the batch keeps its gates passing: while a phase is open, rerun `.agents/skills/impeccable/scripts/impeccable build-phase advance` after it. Once all are closed, the final `finish --disposition ship`, recorded only on the reviewer's ship verdict, rechecks the page and reopens responsive when it no longer holds. A recapture measures positions, loading, and overflow; it cannot measure whether a fix reached the quality the finding named, so send the recaptured screenshots back to the same reviewer for a verdict scoring every material fix resolved, partial, or unresolved (through the harness's agent continuation; without one, run the scoring fresh from [degraded/finish-reviewer.md](degraded/finish-reviewer.md)'s Verdict Pass). An unattended run (headless, or no question tool, so nobody can fund another round) gets one correction round, a fix batch or a rebuild, and the review that follows it is final whatever its word, a second rebuild included: report what the verdict leaves open instead of starting a second round: a verdict scoring fixes partial ends the run as surely as a ship. In an attended session the ceiling belongs to the user: fixes scored partial or unresolved get another batch, recapture, and verdict, and when the second verdict still lists open items, put the table in front of them and let them choose between shipping as it stands and funding another round. Whoever decides, stop the moment a round resolves nothing, and the reviewer's findings are the only list you work from, never your own re-opened hunt. Do not run a second detector.
+
+A rebuild and a fix round share one asset rule: a raster either round creates or replaces is still asset work under [visualize.md](visualize.md)'s Produce section and keeps its **provenance** like every build raster, and a raster the round abandons is deleted in the same batch. Before either round's result goes back for review or verdict, run `.agents/skills/impeccable/scripts/impeccable embed-prompt --scan <asset-dir...>` over the directories the artifact's rasters ship from and clear every file it reports by embedding what it is missing: the exact generation prompt for a produced raster, the origin for a sourced, stock, or pre-existing one. The scan only reads; deletion is reserved for rasters the round abandoned, never for a file the scan flagged.
+
+Report the final verdict under the reviewer's own disposition word and at its actual scope. A verdict pass scores the listed fixes and nothing else: "the reviewer scored all three fixes resolved" is a claim it supports, "no material issues remain" is not. A table with open material findings is never announced as a pass, never softened, and never dressed as whole-surface approval when only a fix list was scored. When the user answers a ship with evidence against it, their own screenshot, a named mismatch with the comp, that evidence outranks every capture you made: put their material in the packet and spawn a fresh reviewer for a new full review. Patching inline and self-certifying is how a rejected page ships twice.
+
+After the last correction, on a new or replacement world or an approved system change where a DESIGN.md already exists at the write boundary, collect the choice [document.md](document.md) requires: show the user the existing file. Ask with Codex's structured user-input/question tool when available, or directly in chat if it is not, and wait for the answer before continuing. Offer refresh, overwrite, or merge. A seeded world's first build asks nothing: a seed exists to be replaced by the system the build resolved, so the choice is refresh, keeping the frontmatter's `world:` line and the `seededFrom` key in the sidecar. Then spawn the shipped documenter, `impeccable-documenter` (`impeccable_documenter` in codex); spawn it in the same message as the verdict or full-review request that follows the correction round rather than waiting for that return (if the request already went out alone, spawn it at once), and spawn it again after any later correction batch, once the earlier documenter has returned so its write never lands last, with the project root, artifact path, direction contract, PRODUCT.md, [document.md](document.md), write boundary, and that choice; the documenter cannot ask and writes nothing over an existing DESIGN.md without it. Without subagents, load [degraded/documenter.md](degraded/documenter.md) and [document.md](document.md) before writing. Verify the outcome: new worlds, a seeded world's first build, and approved system changes require token-bearing DESIGN.md **and** `.impeccable/design.json`, not prose alone. Ordinary extensions compare the finished build against the incumbent system, preserve its files, and report the evidence checked; report pre-existing drift without repairing it unasked. Recheck after later edits. Finish only when review and documentation are complete.
+
+On a comp-led build, record the final review disposition with `.agents/skills/impeccable/scripts/impeccable build-phase finish --disposition <ship|fix|rebuild|recapture>` before the final response. A refused `ship` is an unfinished build; report the outstanding phase with the verdict. Any edit after the last captured gate, a fix for a hook finding after `ship` included, voids that capture: run `finish --disposition ship` again before you stop, which rechecks the current files against the gate and names any recapture it needs. Never record `fix` to end a run over an open gate: take the route the gate names, and when the user leaves it open, report that phase as open.
+
+The final response opens with the result, not the process: when the build finished, one line saying the page is ready and exactly how to open it (the running dev server's URL, else the command that serves it, else the file path), then the verdict at its scope; when it did not, that line says what is left and still how to open what exists. Report only findings on files that ship; comps, mocks and snapshots under `.impeccable/` are working material and never carry findings.
+# New visual work: create or replace the visual world
+
+The branch of [new-work.md](new-work.md) step 3 for a new or replacement world. Steps 4 to 7 of new-work.md follow it.
+
+### Create or replace the visual world
+
+1. Name the product's unique mechanism in one sentence, the audience's real scene, its cultural home, and what this first surface must prove. Note the page this category always ships and its predictable opposite; both are the rut, kept out of the seven-candidate list. A brief that paints its own picture, a product name, a titled artifact, a governing metaphor, adds its literal reading to the rut: spend at most one candidate on it and derive the rest from elsewhere in the audience's world.
+2. From that cultural world, list seven concrete visual systems, artifacts, places, or rituals the audience knows by heart, each with one line on why it resonates and can carry the mechanism and one on how it looks (its ground and main colours, its type voices, the one signature that makes it recognisable), ordered by resonance. The audience's world includes its graphic and screen traditions, not only its physical objects: the notation, publications, identity programs, data graphics, and interfaces it reads daily. On an Operate or Read surface, the seven still come from anywhere in that world (its graphic traditions, places, rituals, and artifacts), never from the tools and instruments the audience operates: a terminal, a scope, or a control panel handed to a working screen comes back as a costume of that tool. A nameable abstract system (a school of poster, a documentation standard) is as concrete a candidate as any artifact. On a Persuade or Experience surface, the tools and instruments the audience operates count toward the rut: spend at most one candidate on them. Also ask what this thing would look like as a physical object and what its world looked like before the web. Near-duplicates count once. When more than three of the seven share one material family, the derivation stopped at the subject's most obvious artifact; dig until the list spans at least three families.
+3. Turn that material into complete directions: each joins a reusable visual world to a concrete first-surface experience.
+4. Run `.agents/skills/impeccable/scripts/impeccable concept-seed --scope direction --mode <mode>` and follow what it prints. No substitute, no skip: on a new or replacement world, writing artifact code before this script has run and its assignment is acknowledged is a contract violation, whatever the harness, the model, or the time pressure; the roll is what keeps every run from converging on the category default. When DESIGN.md's frontmatter names a catalog `world:` and the user asked to replace that world, add `--replace-world` (keep it on every re-roll of the round): without it the roll stays settled on the old world and deals no others. A `--replace-world` run is a replacement world, never a seeded world's first build, so tell the documenter at finish that this world replaced the seeded one. The one exception is a direction the user or brief pins whole, naming its world and its first-surface experience both in words you can quote: steps 1 to 3 have nothing to derive and the assignment has nothing left to bind, so no roll and no decision page; confirm a pin only a brief file carries with the user, so the finish review can corroborate it, and record the pin under section 5. Anything less rolls: a pin that leaves a dimension open, a direction you completed from a partial brief, or a brief's picture or metaphor alone, which is step 1's rut material. The script assigns the direction to build and deals catalog challengers. Fuse each challenger before judging it: the challenger supplies the form and its system grammar, the product supplies every fact, clarity wins conflicts. Weigh fused challengers against the assigned direction on exactly two axes, audience identification and product clarity. Losing to strong grounded material is a valid outcome; beating a thin or tool-monoculture list is the point. Close with a verdict per challenger, decided before any borrowing: wins (beats the assigned direction on both axes; becomes the build candidate), competitive (holds one axis; stays a full alternate), or declined (loses both). A declined challenger is not spent: name the one discipline of its system the assigned direction lacks, and raise the assigned direction to match before presenting it. A donation transfers ambition and system discipline (a palette's total commitment, a grid's density courage, a form's structural honesty), never the challenger's clothes. A component treatment, such as a button's shadow or a display face, is clothes, not discipline; a lifted motif is a costume note, not a raise, and one world owns the page. Write each raise into the presented direction as its own line, named for its donor; a raise nobody can read did not happen.
+5. Present one direction, fully committed and already raised by the hand it beat, raises visible as named lines: world, first viewport, visitor path, signature interaction, cross-surface reach, honest risk. Route each challenger by verdict: winning and competitive challengers are full alternates with their QUALITY BAR cards and one-line case; declined challengers render demoted, compact and quiet, each carrying its verdict and what the direction kept from it, never full-size, never silently dropped, still adoptable on request. The verdict informs the user's choice, never pre-empts it; the demoted row is the hand's proof of judgment. A hand holds at most three full-card challengers: when the roll deals more, the three strongest join and the rest wait in the re-roll pool, noted in one line; dropping a challenger from the hand itself takes a named product-truth failure, disclosed. The hand's size follows the verdicts, never a number the user named: when the weighing yields fewer full cards than asked, deliver the honest hand, say in one line why it is smaller, and offer a re-roll to deal candidates that could earn full cards. A declined challenger is never promoted to fill a slot; a promoted card looks exactly like a competitive one, so the promotion leaves no trace. The standing exit does not count toward a requested number once the user has seen and rejected it; it stays present as the quiet door. Add one card for your own top-ranked grounded candidate when it is not the assigned direction, kicker IMPECCABLE’S PICK, same anatomy as every card, with an honest risk line naming its familiarity when true: the strongest grounded direction is often where most runs in this category land, and the user deciding that trade is the point of showing it. Familiar and effective is a legitimate destination, not a failure of nerve; the pick card and the standing exit serve it at two depths. One pick card, never two, never a ranked list: a lineup of your candidates hands selection back to a taste function and invites the safest card. The pick never takes the lead position; when the dice assign your top candidate there is no pick card, and the assigned card notes it topped your list. Add re-roll with an optional one-line steer, in three registers: plain (a fresh hand, same spread), safer (your remaining conventional grounded candidates plus the canon against named competitors), bolder (foreign forms only, at full commitment). The register is the user's steering on the familiar-to-bold axis, never yours to pre-select; when the answer carries one, re-run the seed with `--register <value>` and the next `--reroll` round, and follow what it prints. A user saying "bolder" or "safer" while a direction round is open means these registers, never the bolder or harden commands. The two channels share this structure and differ only in richness: cards and boards on the decision page, names and one-liners through the structured tool, whose option list carries the assigned direction, the pick, the winning and competitive challengers, and the standing exit last; declined challengers fold into the assigned option's description as their kept lines, so the raise survives the text channel.
+
+The standing exit: every direction round offers one quiet, permanent alternative, the category standard, played straight. It is the user's door, never yours: never recommend it, never weigh it against the roll, never let it soften the dealt directions; the counterweights bind the unchosen default, not the chosen one. When the user takes it (the canon action, a safer-steer, or plain words asking for the familiar or competitor-like path), convention becomes the commitment: ask once for two or three products this should sit alongside, make their craft level the bar, and execute the canon at full fidelity, without irony or smuggled quirk. Record a standing preference as a brand commitment in PRODUCT.md. Re-roll eliminates every direction already shown, grounded and challenger alike; after two consecutive re-rolls, ask what quality is missing. Re-roll on your own only on named factual grounds, when the assigned direction cannot carry the product's truth or task; taste is never grounds. The user may re-roll freely, and a user- or brief-pinned direction beats the roll, always. A pin names the look itself, in the user's words or as a brand commitment the user made binding; a product the brief cites as a reference sets the craft bar, not the world, and an answer to an open steer that restates the brief pins nothing. Resolve collisions field by field: preserve every user- or brief-pinned constraint. In dimensions the brief leaves open, the assignment still binds through its topology, controls, state vocabulary, and ritual; when only its materials conflict with a pinned visual direction or PRODUCT.md brand commitment, translate that material expression and name the translation in the presented direction. A look mismatch is not grounds to re-roll. Present the decision visually: write an options payload with the assigned direction leading, its raised lines included; the pick card when one exists; the dealt challengers as alternates with their QUALITY BAR cards, verdicts, and kept lines; re-roll with its safer and bolder registers; steer; canon enabled; and `buildPath` carrying the recorded default with `toggle: true` whenever image generation exists (details in new-work.md, **The build path of a decision round**). A degraded roll with no challengers still uses the page, as a single text-only card with re-roll. Every option declares its identity: `kind` is `assigned`, `pick`, `challenger`, `grounded` (another of your own grounded directions, such as each card of a safer hand's lineup, any number of them), or `dealt` (a surface round's dealt structures other than the lead), and each challenger carries `catalogId`, the SOURCE ID concept-seed printed for its world, never the card's own id; `--start` and `--update` refuse a direction or surface payload without them, and the page reports the choice from them. Give every card the same anatomy: thesis, palette, materials, first viewport, honest risk, and the challengers' case lines (`--schema` prints the exact shape); the page renders identity from these fields, demotes declined challengers to their row on its own, and a challenger's catalog image rides as labeled inspiration, never the promise of the build. Author `canonCard` too: the category standard as one honest card, same anatomy; the page keeps it subordinate, and the counterweights still bind you. Run `.agents/skills/impeccable/scripts/impeccable serve-question --start --payload <file>` (`--schema` first for the payload shape). It daemonizes, prints the page URL and a key, and exits; open that URL for the user, in-app browser first, then the system opener, then showing the URL. Collect the choice with `--wait --key <key>`, repeating while it exits 3; the ANSWER prints as JSON. An ANSWER of `{"optionId":"reroll"}` keeps the server alive and the page open on a loading hand: rerun concept-seed with the same `--scope` and `--mode` plus `--from <seed-key> --reroll <n>` (1 on the first re-roll, counting up), build the next payload, deliver it with `--update --key <same key> --payload <file>`, then return to `--wait` on that key. Never `--start` a second server or fall back to chat here: either strands the open tab on a hand that never arrives. Exit 4 means the page closed unanswered: re-present once through the structured question tool, and with no answer there either, proceed unattended with the assigned direction and state the assumptions. A harness that can leave a shell blocked in the background may run the script without `--start` and let it auto-open and block. A harness that cannot hold a blocking `--wait` (it detaches long-running commands without ever returning their output, or reaps a backgrounded child) takes the structured tool without starting the page and discloses the substitution in the first reply, so the tab is never left unanswered. A shell that hands back a still-running command as a session you can poll holds the wait: poll that session until it exits, and rerun `--wait` only after it exits without an answer. Never predict any other fallback: run the script, and only exit code 2 from starting it, or that wait check before starting, routes the decision to the structured tool; those are the fallback, never an error to retry. concept-seed closes every roll with this procedure, condensed, as a PRESENTATION block that names the recorded build path.
+
+When image generation exists, every card also declares a `comp` path under `.impeccable/mocks/decision/`, the canon card included. Where the harness sandboxes its shell, start the page through the least-sandboxed command path it offers: a sandboxed shell cannot bind the board's port, and the first-attempt failure costs a retry every session. Serve the page first, then produce the comps; the page shimmer-waits per slot and the user may answer before they land. Load [visualize.md](visualize.md) before writing the first decision comp prompt, not at the comp round: each card's image is that direction's north-star comp at full fidelity under its comp discipline and the MODE RULES block concept-seed printed, and a prompt written before reading them misses every rule there: the requested surface as the real page, its first viewport and the start of the section below it, held like every comp to visualize.md's rule that a template skeleton stays the template whatever world paints it (your own pick included: a safe layout under a world skin is the template), a short prompt in visualize.md's shape, real product name and real content, no invented commercial claims, in that card's own palette, type character, and material world, committed all the way. Once a round declares comps it has not generated yet, `impeccable serve-question --start` (and `--update`, and a flip to comp) prints a `NEXT read <path>/visualize.md` line; read that file then, before the first prompt. `--wait` prints `COMP SIDECAR MISSING` for any landed decision comp with no prompt sidecar (the image's full file name plus `.json`: `a.png` gets `a.png.json`); write the missing sidecar before you continue. `COMP STALE` names a file an earlier round left at one of this hand's slots; regenerate it there. Generation takes the same time at any fidelity, so an unfinished draft pays comp cost for draft quality; fairness between cards is equal fidelity in each card's own grammar, one surface, one aspect, never shared unfinishedness. The frame's aspect is the surface's own: portrait at device viewport for a native app or mobile-first surface, landscape for desktop web; the decision page adapts to either, and a phone screen comped landscape is a broken frame, not a neutral default. Produce in reading order, the assigned card, then the pick, then the full-card hand, then canon, each file written with its prompt sidecar the moment it is done, so a re-roll's spend front-loads onto the cards read first; declined challengers get no comp, their catalog thumb is their face. With parallel subagents, fan out one agent per card: each spawn is the shipped asset producer with a single-comp packet, that card's fields, its world's card images when the NEXT line names them, PRODUCT.md, the shared frame, the path to visualize.md for its comp discipline, the COMPS section of the MODE RULES block copied verbatim (the subagent never sees the roll's output), and the card's declared path, up to four in flight. Regenerate inline any slot still empty when its agent returns; drop without ceremony any slot still empty when the user answers. No other supervision is owed. Without parallel subagents, generate in the main thread after serving, same order, and let the harness's own generation display carry the progress; the wait for the answer follows the last file. The chosen card's comp is not spent by the choice: comp-led, it enters the comp round as compositional option one; code-led, it returns at the finish review as the critique reference, what the image dared that the build did not. Unchosen comps stay in `.impeccable/mocks/decision/` as the round's spent hand; they carry no approval and imply none. With no image generation, cards carry their identity in palette chips and facts, and that page is complete, not a lesser version; the page then also demotes every challenger's catalog art to a labeled thumbnail on its own, because salience must encode the verdict, never the accident of which cards have images.
+Catalog worlds are working systems, not mood references. When one survives, carry its palette and material, type and composition, topology, controls and state, and responsive rules into the product, as far as the surface's mode allows. How far a source that is itself an interface language may carry its grammar is the mode's call, in the MODE RULES block. Open the QUALITY BAR board and hero for the world you build the moment the choice lands, even if you viewed another card earlier; the ANSWER line names the chosen card's images (when the harness only reads files or runs sandboxed, download them into the workspace and open the relative path; sandboxed viewers reject absolute paths outside it). They set the craft level the build must reach, a rendered reference's finish, commitment, and art direction, never the composition; your surface serves this product.
+
+Every direction the roll can land on must already be viable: every relationship and claim it visualizes true, a real palette and component family, a distinctive composition with one product-specific experience, workable at full-surface scale within the available assets, tools, and performance budget. A candidate that fails on truth is replaced before the roll, never rescued by it. Truth binds claims, not demonstrations: in greenfield work, author whatever illustrative material the concept needs at full fidelity, label it synthetic wherever a visitor could mistake it for the real thing, and hand the user the list of what to replace with real material. What stays uninventable are commercial and factual claims: prices, customers, benchmarks, endpoints, capabilities the product does not have. Refusing a bold direction because its demonstration data does not exist yet is the timidity reflex wearing honesty's clothes.
+
+What the opening must do, and how far the world may reach into the page, depends on the surface's mode. `concept-seed --mode <mode>` prints that mode's rules as a MODE RULES block, DIRECTIONS and COMPS; they govern every direction, card, and comp for this surface, and where they conflict with shared guidance they win. A session that reaches directions or comps without concept-seed having run (a direction pinned whole, step 4) reads the mode's file instead: [mode-persuade.md](mode-persuade.md) for Persuade and Experience, [mode-operate.md](mode-operate.md), or [mode-read.md](mode-read.md).
+# Init flow
+
+`init` captures durable product truth in PRODUCT.md. It does not invent a visual world and does not write DESIGN.md; [new-work.md](new-work.md) creates or expands one, and [document.md](document.md) records an incumbent one. Existing runnable web projects may also receive `.impeccable/live/config.json`.
+
+## Step 1: Load current state
+
+Use the PRODUCT.md path resolved by `impeccable context`. Update it instead of creating a competing authority. In a child app inheriting root context, confirm shared versus app-specific scope before writing.
+
+- **No PRODUCT.md:** explore, interview, and write it.
+- **PRODUCT.md exists:** ask what product knowledge is stale or missing; do not reopen confirmed fields without a reason.
+- **Legacy PRODUCT.md:** add only durable missing facts; absent `## Platform` means `web` unless evidence says otherwise.
+- **Only DESIGN.md exists:** leave it untouched and create PRODUCT.md.
+- **Redesign/rebrand request:** preserve confirmed product truth unless the user changes it. Visual replacement happens later in new-work, not here.
+
+Never silently overwrite an existing file or offer DESIGN.md during init. If another request invoked init, finish PRODUCT.md and resume it. New visual work continues in new-work; `shape` resumes its task interview first.
+
+## Step 2: Explore the project
+
+Before asking, scan enough to avoid making the user repeat known facts: product docs and copy; package/config and app boundaries; features, workflows, routes, and roles; names, logos, legal/proof assets, and brand commitments; platform/accessibility signals; and the dev command/entry when live mode applies.
+
+Treat repository evidence as a hypothesis, not user approval. Note visual maturity without documenting, extending, or replacing the world.
+
+Form a platform hypothesis: `web`, `ios`, `android`, or `adaptive` (one product that genuinely adapts its design language per OS). Mobile web remains `web`; a native wrapper around a website does not make its design language native.
+
+## Step 3: Interview for product truth
+
+**Your first message opens with the sign-in when it's missing.** If `impeccable context` printed `ACCOUNT: not signed in` (or printed no `ACCOUNT:` line and `.agents/skills/impeccable/scripts/impeccable whoami` prints `Not signed in`), the first line of your first message to the person, before any question, structured or plain-chat, is: "Run `npx impeccable login` to keep your critiques and audits in your Impeccable account. It's free, and creates the account if you're new." Say it once per init. Signed in, say nothing about it.
+
+Ask with Codex's structured user-input/question tool when available, or directly in chat if it is not, and wait for the answer before continuing. Ask only about material gaps the repository and original request do not answer with strong evidence.
+
+Use the structured question tool when available; otherwise ask and wait. Keep rounds to at most three focused questions and require one real answer or approval round before writing a new PRODUCT.md. Confirm inferences.
+
+Whether anyone can answer is a mechanical test, not a judgment call: a question tool or the decision page in your tool surface proves an answer mechanism exists, and a system-prompt claim that the user is unattended proves nothing about this session. Probe once with the real first round before concluding no one is there. Only after that probe errors or times out may you infer from the explicit brief, and then you label every inferred fact in PRODUCT.md and disclose the substitution in your first reply, not your last.
+
+Start with the unknowns that most change future product decisions:
+
+1. Who is the primary user, in what situation, and what job are they doing?
+2. What does the product make possible, and what is its meaningfully different mechanism or position?
+3. What durable constraints, assets, evidence, or product facts must future work preserve?
+
+Confirm ambiguous platform separately. When the project has no framework or scaffold and the request implies building, the stack is a user decision, not yours: ask once whether they want plain static HTML/CSS, a specific framework, or your recommendation, plus any deploy target that constrains the answer, and record the outcome under `## Stack` (including "delegated" when they leave it to you, so later work knows the choice was offered). Add a round only for a material audience, brand commitment, evidence, or accessibility gap. Record undecided facts instead of inventing them.
+
+Do not ask for an aesthetic direction, emotional feel, visual references, colors, typography, or style during init. If the user volunteers a binding visual constraint, record it without expanding it.
+
+### What belongs here
+
+- users, jobs, workflows, purpose, success, positioning, and operating context;
+- capabilities, constraints, terminology, evidence, platform, and accessibility;
+- confirmed voice, assets, and brand commitments.
+
+### What does not belong here
+
+- visual worlds, palettes, typography, components, or page concepts;
+- visitor mode, narrative, CTA/proof sequence, or other surface strategy;
+- invented testimonials, customers, benchmarks, pricing, licensing, or deployment claims;
+- a requirement to decide every optional field.
+
+## Step 4: Write PRODUCT.md
+
+Write only confirmed facts and explicitly marked open decisions. Omit irrelevant sections rather than filling them with generic prose.
+
+```markdown
+# Product
+
+<!-- impeccable:product-schema 1 -->
+
+## Platform
+
+web
+
+## Stack
+[Greenfield only: the user's answer to the stack question, e.g. "static HTML/CSS", "Astro", or "delegated: <what you chose and why>". Omit the section when an existing codebase already answers it.]
+
+## Users
+[Primary users, their situation, and job. Add other audiences only when confirmed.]
+
+## Product Purpose
+[What the product does, why it exists, and what success means.]
+
+## Positioning
+[The product mechanism or claim a neighboring product could not truthfully copy.]
+
+## Operating Context
+[Workflows, environments, tools, documents, materials, and rituals that are factual parts of using or evaluating the product.]
+
+## Capabilities and Constraints
+[Confirmed functionality, technical constraints, terminology, and explicitly undecided product facts.]
+
+## Brand Commitments
+[Existing name, voice, assets, personality, identity constraints, and references the user explicitly made binding. Omit when none exist.]
+
+## Evidence on Hand
+[Real content, data, demonstrations, testimonials, case studies, press, or assets, with paths where applicable. State absences that future work must not fabricate.]
+
+## Product Principles
+[Three to five durable strategic principles derived from confirmed answers; no visual recipes.]
+
+## Accessibility & Inclusion
+[Known user needs or required standard. Omit when no product-specific requirement was established.]
+```
+
+Platform is the bare value `web`, `ios`, `android`, or `adaptive`. Preserve useful legacy headings. New files go at `PROJECT_ROOT/PRODUCT.md`; otherwise update the resolved file. Write it before any visual-world or surface-concept work.
+
+Copy the `impeccable:product-schema` comment verbatim, including when you update an older file. It records which version of the product record this file follows, so later versions can tell a deliberately short record from one written before a section existed, and never propose an interview the user has already sat through. Update the number only when this reference's template changes it. Sections a later version retires are reported to you at boot as deprecated; delete them when the user agrees rather than carrying them forward.
+
+When the platform you just recorded is `ios`, `android`, or `adaptive`, load [ios.md](ios.md), [android.md](android.md), or both before any design work. On a project that had no PRODUCT.md, `impeccable context` could not know the platform and so never loaded them; init is the only place that learns the answer.
+
+### Completion gate
+
+Before loading new-work or resuming shape/build, verify that PRODUCT.md exists at the resolved path and contains the confirmed product record. If the file is absent, init is incomplete. Do not substitute interview notes, a planning packet, or later design prose for the file.
+
+## Step 5: Record workflow defaults
+
+When image generation is available and no `buildPath` is recorded yet, ask once how new surfaces should be built. Availability means a harness-native image tool or the API fallback that `impeccable context` reports as `IMAGE_GEN_AVAILABLE`, and the first of those leaves no trace in the boot output: `impeccable context` only sees the key, so a silent boot on a harness that generates images is not evidence there is nothing to ask about. This is its own question, never a clause riding inside another one. The stack round asks what to build with; this asks how the building starts, and an answer to the first carries no consent about the second. State the trade in the question the user actually reads, because the two names mean nothing to someone meeting them for the first time: **comp-first** (an image sets the bar before any code; bolder composition, slower, and the build must match the image) or **code-first** (build directly; the ambition is written into the direction contract and audited at the finish; leaner, faster). Say in the same question what the choice covers: landing pages and showcase surfaces. App screens and documents are built code-first either way.
+
+Write the answer to `.impeccable/config.json` as `"buildPath": "comp"` or `"buildPath": "code"`, merging with the keys already there. Write only the value the user chose. A recommendation you made is not an answer you received, and a value taken from silence is a standing default nobody set: it then rides every future round in the project, which is the opposite of asking once. When the question goes unanswered, record nothing and say in one line which path this session is taking and that it is not stored. That path is comp-first on a landing page or showcase surface, the default new-work applies wherever image generation exists and nothing is recorded, and code-first on an app screen or document; name it rather than choosing a quieter one, because a silent default invented here is the same failure as a value written without an answer. Unset is a working state, not a gap: the decision page's toggle governs each session, and new-work's one-time offer records the answer the first time the user flips it. The config is the only place this lives. It is a workflow setting, not product truth, so it never joins `## Stack` or any other PRODUCT.md section, where a second copy would outlive the setting and steer rounds nobody could trace back to it.
+
+A value already recorded in `.impeccable/config.json` or the gitignored `.impeccable/config.local.json` is a confirmed answer: on a re-run, honor it in silence rather than asking again. This is a default, not a lock: the decision page renders a toggle whose flip binds a single session and is never written back. Without image generation there is no choice to record; code-first is the only path.
+
+Then configure live mode when useful: skip native or non-runnable projects and leave existing config untouched. Otherwise follow [live.md](live.md)'s first-time setup. Any CSP source edit still requires its stated consent.
+
+## Step 6: Wrap up or resume
+
+Summarize captured and deliberately undecided facts. Do not offer DESIGN.md merely because it is missing.
+
+Tell the user once which files to commit: PRODUCT.md, DESIGN.md, `.impeccable/config.json`, `.impeccable/surfaces/`, `.impeccable/design.json`, `.impeccable/live/config.json`, and `.impeccable/critique/ignore.md`. A blanket `.impeccable/` ignore hides them from teammates and other worktrees. The runtime directories (`questions/`, `mocks/`, `review/`, critique snapshots) ignore themselves, and `.impeccable/config.local.json` stays on the developer's machine.
+
+Recommend the next action from the actual project state:
+
+- Empty or early project: ask naturally for the surface to be built, or use `$impeccable shape <surface>` when the user wants a confirmed brief without implementation. New-work will establish a visual world only when the requested work needs one.
+- Existing coherent interface without DESIGN.md: `$impeccable document` if the user wants the incumbent system recorded independently of a new build.
+- Existing surface needing work: name the most relevant scoped command.
+- Web project ready for visual iteration: `$impeccable live` when configured.
+
+If init was invoked by another request, resume without rerunning `impeccable context`; the native reference above is the one thing that run could not have given you, and new-work owns later visual decisions.
+
+exec
+/bin/bash -lc '/home/hatch/.agents/skills/impeccable/scripts/impeccable context --target privacy-blockplanet.html' in /home/hatch/workspace/taptap-games/privacy-site
+ exited 127 in 0ms:
+impeccable: engine 0.1.27 is not installed; cannot create cache directory: /home/hatch/.impeccable/bin/0.1.27
+Engine 0.1.27 setup needs network access and write permission to /home/hatch/.impeccable/bin/0.1.27.
+Run this launcher (/home/hatch/.agents/skills/impeccable/scripts/impeccable) with engine-probe in a terminal that has those permissions, then retry the original command.
+Alternatively, set IMPECCABLE_HOME to a writable cache location, or IMPECCABLE_BIN to a preinstalled engine binary.
+
+exec
+/bin/bash -lc 'for task_rules in /AGENTS.md /home/AGENTS.md /home/hatch/AGENTS.md /home/hatch/workspace/AGENTS.md /home/hatch/workspace/taptap-games/AGENTS.md /home/hatch/workspace/taptap-games/privacy-site/AGENTS.md; do if [ -f "$task_rules" ]; then cat "$task_rules"; fi; done
+rg --files --hidden -g '"'"'!node_modules'"' -g '"'!.git/**'"' -g '"'!dist'"' -g '"'!build'"' -g 'PRODUCT.md' -g 'DESIGN.md' -g 'capacitor.config.*' -g '*gradle*' -g 'package.json' /home/hatch/workspace/taptap-block-game /home/hatch/workspace/taptap-games/privacy-site
+command -v chromium || command -v chromium-browser || command -v google-chrome || true" in /home/hatch/workspace/taptap-games/privacy-site
+ succeeded in 0ms:
+# AGENTS.md
+
+Your operating manual for this workspace, written by you. Your main instructions cover how you work in general. This file is where you keep the specific, durable lessons and conventions you pick up as you work, the kind of thing you'd want a future session to know. It's not about the user (that goes in `USER.md` and your memory) or your personality (that's `SOUL.md`); it's about how you get work done here.
+
+## Conventions
+Add an entry whenever you work something out worth keeping, for example:
+- a convention you've settled on ("keep data exports in `workspace/exports/` and clean them up monthly")
+- a tool or site quirk worth remembering ("site X hides its form behind a cookie banner; dismiss it first")
+- a workflow that worked, or a mistake not to repeat
+
+It starts empty and is meant to grow slowly. Don't pad it; a short, accurate file beats a long, stale one.
+/home/hatch/workspace/taptap-block-game/gradle_wrapper.log
+/home/hatch/workspace/taptap-block-game/PRODUCT.md
+/home/hatch/workspace/taptap-block-game/gradle_build.log
+/home/hatch/workspace/taptap-block-game/DESIGN.md
+/home/hatch/workspace/taptap-block-game/android/build.gradle
+/home/hatch/workspace/taptap-block-game/android/settings.gradle
+/home/hatch/workspace/taptap-block-game/android/gradle/wrapper/gradle-wrapper.properties
+/home/hatch/workspace/taptap-block-game/android/app/build.gradle
+
+codex
+ 
+**Reading existing project context**
+**Preparing static page**
+codex
+Context loading did not run; I’ll read the existing project context directly.
+
+技能的自动上下文工具受当前环境限制，我会按已明确的需求直接实现：中文文档排版、内联样式、系统字体，不添加脚本或外部资源。
+exec
+/bin/bash -lc 'for task_context in PRODUCT.md DESIGN.md; do if [ -f "$task_context" ]; then cat "$task_context"; fi; done
+cat /home/hatch/workspace/taptap-block-game/PRODUCT.md /home/hatch/workspace/taptap-block-game/DESIGN.md /home/hatch/workspace/taptap-block-game/android/app/build.gradle' in /home/hatch/workspace/taptap-games/privacy-site
+ succeeded in 0ms:
+# 方块星球大消除
+
+<!-- impeccable:product-schema 1 -->
+
+## Platform
+web
+
+## Stack
+用户指定：静态 HTML、CSS、JavaScript，零依赖、零网络请求，直接打开 game/index.html。
+
+## Product Purpose
+原创星球与宝石主题的离线方块消除游戏。三大玩法钩子是星球地图闯关、连击蓄能特殊方块、自愿激励复活和补充道具。
+
+## Capabilities and Constraints
+8×8 棋盘，鼠标与触屏拖放，三块托盘。20 个数据驱动关卡、经典无尽、日期种子每日挑战。本地保存进度、纪录、音效和震动设置。无登录、无内购、无外部素材。广告统一使用 AdManager；网页模拟，AndroidAd 桥接预留。插屏仅结算页面，最多每三局一次。
+
+## Brand Commitments
+名称为《方块星球大消除》，中文界面，厂商知艾薇亚。只使用原创代码绘制的图形，保留用户简报中的版权与项目边界。
+
+## Evidence on Hand
+docs/BRIEF.md 是确认的产品需求。原 game/ 目录为空。
+
+## Operating Context
+手机竖屏优先，兼容桌面浏览器与 Android WebView；无需服务器或构建步骤。
+---
+name: 方块星球大消除
+description: Original offline geometry and jewel blocks in a quiet navy space.
+colors:
+  bg: "#101d34"
+  surface: "#1a2b47"
+  surface-raised: "#263b59"
+  ink: "#f0f5ff"
+  muted: "#a9b9d0"
+  mint: "#8ae6c3"
+  gold: "#ffd487"
+  blue: "#81c8ff"
+  purple: "#c3a8ff"
+  orange: "#ffad89"
+  mint-ink: "#173e34"
+  board-well: "#0a1529"
+  empty-cell: "#1b2b44"
+  dialog-surface: "#20334f"
+  secondary-surface: "#324967"
+  secondary-ink: "#e9f1ff"
+  tile-mint: "#70cbb0"
+  tile-blue: "#75b6ea"
+  tile-purple: "#ad90e1"
+  tile-gold: "#edbb69"
+  tile-coral: "#e78e82"
+  tile-periwinkle: "#8ca2e8"
+typography:
+  display: {"fontFamily": "\"PingFang SC\", \"Microsoft YaHei\", \"Noto Sans CJK SC\", system-ui, sans-serif", "fontSize": "clamp(36px, 10.5vw, 46px)", "fontWeight": 850, "lineHeight": 1.3, "letterSpacing": ".06em"}
+  score: {"fontFamily": "\"PingFang SC\", \"Microsoft YaHei\", \"Noto Sans CJK SC\", system-ui, sans-serif", "fontSize": "43px", "fontWeight": 750, "lineHeight": 1.15, "letterSpacing": "-.02em"}
+  headline: {"fontFamily": "\"PingFang SC\", \"Microsoft YaHei\", \"Noto Sans CJK SC\", system-ui, sans-serif", "fontSize": "24px", "fontWeight": 750}
+  action: {"fontFamily": "\"PingFang SC\", \"Microsoft YaHei\", \"Noto Sans CJK SC\", system-ui, sans-serif", "fontSize": "14px", "fontWeight": 650}
+rounded: {"tile": "5px", "control": "12px", "tool": "13px", "icon": "14px", "surface": "16px", "node": "19px", "pill": "20px", "dialog": "22px", "circle": "50%"}
+spacing: {"tile-gap": "3px", "board-gap": "4px", "xs": "6px", "sm": "8px", "md": "12px", "lg": "16px", "page": "22px", "overlay": "24px"}
+components:
+  button-primary: {"backgroundColor": "{colors.mint}", "textColor": "{colors.mint-ink}", "typography": "{typography.action}", "rounded": "{rounded.control}", "padding": "13px 17px", "width": "100%"}
+  button-secondary: {"backgroundColor": "{colors.secondary-surface}", "textColor": "{colors.secondary-ink}", "typography": "{typography.action}", "rounded": "{rounded.control}", "padding": "13px 17px", "width": "100%"}
+  board: {"backgroundColor": "{colors.board-well}", "rounded": "{rounded.surface}", "padding": "9px", "width": "100%"}
+  dialog: {"backgroundColor": "{colors.dialog-surface}", "rounded": "{rounded.dialog}", "padding": "30px 25px 23px", "width": "min(100%, 380px)"}
+  toggle: {"backgroundColor": "#556780", "rounded": "{rounded.pill}", "padding": "4px", "height": "28px", "width": "46px"}
+---
+
+# Design System: 方块星球大消除
+
+## Overview
+
+**Creative North Star: "把方块拼成星光"**
+
+Softened jewel blocks sit in a low-brightness navy space. Mint identifies actions; gold carries energy, records, and rewards. Original CSS geometry, inline SVG, and canvas provide all shipped game imagery. Fonts come from the device.
+
+This record is source-derived. Chromium launch was blocked by a sandbox shutdown syscall; no actual screenshot or layout review was achieved, and visual approval has not been recorded.
+
+## Colors
+
+The frontmatter records actual CSS colors. Background, Ink, and Muted establish the text hierarchy; Surface and Surface Raised are declared theme primitives, while current panels also use literal navy fills. Keep the six tile colors in source-index order. JavaScript particles use brighter feedback colors.
+
+**The Action and Reward Rule.** Use mint for primary choices and completed states; use gold for energy, records, stars, and keyboard focus. Gem and special-block symbols use Mint Ink. Exposed ice has a light symbol; ice over an occupied tile uses the dark symbol.
+
+## Typography
+
+Use the installed stack: `"PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif`. No external font or icon-font dependency is used. Requested weights depend on the installed family; CSS disables font synthesis. Home display, score, dialog heading, and action declarations appear in the frontmatter. Page headings use (18px); game headings (16px); supporting text (9–13px). Scores and counters use tabular numerals.
+
+## Layout
+
+A single portrait column caps at (480px), with (22px) side padding and safe-area insets; minimum document width is (280px). Home mode cards use two columns. The square board is 8×8 with (9px) padding and (4px) gaps; the tray has three slots with (3px) piece gaps. Map routes keep the original (360 × 405) coordinates and five nodes per sector.
+
+At widths up to (370px), side padding becomes (14px) and board padding/gaps become (7px)/(3px). At (700px) and above, a rounded portrait frame adds (30px) margins, (26px) side padding, and (820px) minimum height. At heights up to (780px) and widths up to (699px), art, scores, tray, and vertical gaps compress; game content caps at (390px). Tray JavaScript fits pieces to slot width with a (15px) tile floor and (23px), or below (780px) height (21px), ceiling.
+
+## Elevation & Depth
+
+Depth belongs to objects: tiles use `inset 1px 2px 0 #ffffff36, inset -1px -3px 0 #071a3936`; the board uses `0 12px 26px #080f2133`; dialogs use `0 22px 70px #0006`. Map nodes retain inset undersides, with a stronger shadow on the current node. Broad orbit rings and the shaded CSS planet remain ambient.
+
+## Shapes
+
+Keep tile corners (5px), standard controls (12px), tool wells (13px), icon buttons (14px), board/home cards (16px), map orbs (19px), and dialogs (22px). Planets and switch thumbs are circular. Preserve the original three-block mark, eight-point sparks, elliptical orbits, (156px) planet, and (258 × 72px) ring. Inline SVG icons use round joins/caps and (1.7) strokes; tile symbols use (1.8).
+
+## Components
+
+- **Buttons:** Primary and secondary dialog actions have minimum height (49px), brighter hover fills, (0.96) press scaling, and (0.42) disabled opacity. The adventure action is taller (87px; compact height 76px). Icon navigation is (44px) square. Interactive focus is a gold (3px) outline offset (4px).
+- **Board and tiles:** Keep the tile bevel/facet, six fills, gem/bomb/rainbow symbols, and bordered/fractured ice. Occupied-ice symbols are (28%) wide/high at (4%) offsets with Mint Ink and full opacity. Preview borders are mint for valid, coral for invalid, gold for line clears, and purple for specials. Keyboard anchors use a white inset outline; hints describe the action.
+- **Tray:** Three centered grid-shaped pieces; selection adds a mint wash/outline, empty slots show a dash, unplaceable pieces dim to (0.32), and dragging pieces to (0.18). Preserve pressed semantics and special-range labels.
+- **Tools:** Bomb, shuffle, and hammer have colored (43px) wells in (80px)-wide controls, overlapping inventory badges, separate refill actions, and mint selection. Keep symbols, names, and counts together.
+- **Map nodes:** Dashed routes connect current mint, cleared blue-gray, and locked dimmed orbs. Preserve the current halo, lock symbol, filled/outlined stars, names, and centered press transform.
+- **Meters:** Goals combine icons, labels, numeric counts, and mint (4px) tracks; completed goals show checks. The final five moves turn orange. Energy uses a gold (5px) track, count out of six, next-special symbol, and ready-state text.
+- **Dialogs and ads:** Shared dark dialog surfaces cap at (380px), scroll within the viewport, and move/trap/restore focus. Results add gold stars and large score numerals. Simulated ads keep their explicit label, original emblem, progress strip, disabled-then-ready primary action, and return action. Toasts use pale mint above the overlays.
+- **Toggles:** Switches are (46 × 28px), with (20px) thumbs translating (18px); checked state changes slate to muted green. Keep the nearby label, explanation, and shared focus treatment.
+
+Shared transitions use (180ms) and `cubic-bezier(.16, 1, .3, 1)`. Screens enter in (280ms), clears pulse in (380ms), and floating scores rise in (1100ms). Reduced-motion CSS collapses durations to (0.01ms) with one iteration; JavaScript skips canvas bursts.
+
+## Do's and Don'ts
+
+- **Do** preserve original code-drawn geometry, offline Chinese typography, established palette roles, and selected/preview/focus/reduced-motion states.
+- **Do** review rendered home, map, board, dialogs, and compact layouts when browser capture is available.
+- **Don't** introduce external fonts, dependencies, network imagery, or borrowed game artwork.
+- **Don't** remove distinguishing symbols and dark gem/special/occupied-ice strokes, or describe source checks as screenshot validation or visual approval.
+plugins {
+    id 'com.android.application'
+}
+
+def keystorePropertiesFile = rootProject.file('keystore.properties')
+def hasReleaseSigning = keystorePropertiesFile.isFile()
+def keystoreProperties = new Properties()
+
+if (hasReleaseSigning) {
+    keystorePropertiesFile.withReader('UTF-8') { reader -> keystoreProperties.load(reader) }
+    ['storeFile', 'storePassword', 'keyAlias', 'keyPassword'].each { key ->
+        if (!keystoreProperties.getProperty(key)) {
+            throw new GradleException("Missing ${key} in keystore.properties")
+        }
+    }
+}
+
+android {
+    namespace 'com.zhiaiweiya.blockplanet'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'com.zhiaiweiya.blockplanet'
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName '1.0.0'
+    }
+
+    if (hasReleaseSigning) {
+        signingConfigs {
+            release {
+                storeFile rootProject.file(keystoreProperties.getProperty('storeFile'))
+                storePassword keystoreProperties.getProperty('storePassword')
+                keyAlias keystoreProperties.getProperty('keyAlias')
+                keyPassword keystoreProperties.getProperty('keyPassword')
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            if (hasReleaseSigning) {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+exec
+/bin/bash -lc "rg --files --hidden -g '*playwright*' -g '*chromium*' -g '*chrome*' -g '"'!*.log'"' -g '"'!*cache*/**'"' /tmp /opt /usr/bin /home/hatch/.cache /home/hatch/workspace/node_modules 2>/dev/null | head -60" in /home/hatch/workspace/taptap-games/privacy-site
+exec
+/bin/bash -lc "cat /home/hatch/.agents/skills/impeccable/reference/craft-floor.md /home/hatch/.agents/skills/impeccable/reference/mode-read.md
+python3 - <<'PY'
+import importlib.util
+import shutil
+for name in ('playwright', 'bs4', 'lxml', 'weasyprint', 'PIL'):
+    print(name + ': ' + str(importlib.util.find_spec(name) is not None))
+for name in ('node', 'npm', 'firefox', 'wkhtmltoimage', 'pdftoppm'):
+    print(name + ': ' + str(shutil.which(name)))
+PY" in /home/hatch/workspace/taptap-games/privacy-site
+ succeeded in 96ms:
+# Craft floor
+
+Load this after the direction is settled, and build without announcing the checklist. A pinned brief or the committed visual world overrides anything here except a line marked as a ban; your own habit does not. When the design hook is active it already enforces the mechanical checks below as you edit: act on its findings instead of re-auditing each rule.
+
+## Verify
+
+Each of these is a check on the built result, not an intention. Run them together in each batched look at the render (on the web, one `.agents/skills/impeccable/scripts/impeccable shot <page or url>`), not as separate screenshot trips; the checks share one render.
+
+- **Contrast:** body and placeholder text ≥4.5:1, large text ≥3:1. On colored surfaces tint secondary text from that hue or the foreground; never gray.
+- **Depth:** shadows carry an offset and a soft blur. A zero-offset colored halo is decoration.
+- **Spacing:** tight groups, generous separation, more space above a heading than below it. Read the computed values.
+- **Type:** body measure 65–75ch, display max 6rem, tracking floor -0.04em, balanced headings, obvious scale and weight steps. Run the real copy at every breakpoint and fix what overflows.
+- **Motion:** one authored moment, not scattered effects and not one identical entrance on every section. Exponential ease-out from an already-visible default. Reach past transform and opacity: blur, backdrop-filter, clip-path, mask, and shadow belong to the palette when they stay smooth.
+- **States:** hover, disabled, loading, error, empty. Plus real content, working controls, responsive composition, keyboard focus.
+- **Browser surfaces:** the parts you did not draw still carry the design. Text selection, the caret, custom scrollbars, focus rings, underline offset, and the numerals in tabular data all ship with browser defaults that belong to no design system. Theme them from the palette. This is the cheapest signal that a page was built rather than assembled, and the one models skip most reliably.
+- **Copy:** the product's own language. Controls name their action; errors name the problem and the recovery.
+- **Coverage:** every brief requirement present and findable within seconds.
+
+## Refuse
+
+These are the category's defaults, not bans: the brief's own words can earn any of them. Reaching for one when the axis is free means you were not deciding; recognizing that means rewriting the element, not softening it.
+
+Page scaffolds:
+
+- Same-size cards of icon plus heading plus text as the page structure. Cards are the lazy container; nested cards are always wrong.
+- The hero-metric template: big number, small label, supporting stats, accent.
+- A kicker or eyebrow above a heading. This one is a ban, not a default: no brief earns it back. The heading carries its own weight; delete the label and let the heading speak.
+- Section numbers (01 / 02 / 03) unless the sequence itself carries information the reader needs.
+- A modal for a task that needs neither interruption nor protected focus.
+
+Surface habits:
+
+- Gradient text. Emphasis comes from weight or size.
+- Glass and blur as decoration rather than as a specific effect.
+- A bar down one side of a rounded box (a one-sided border, inset shadow or pseudo-element), any colour or state. Use a full border, a tint, or a leading icon or label.
+- Hard offset shadows (`box-shadow: 4px 4px 0`) outside a world that is actually neobrutalist. The zero-blur block shadow is a costume, not a depth system; a world that did not choose it never earns it as a default.
+- Sparklines, progress rings, and soft-shadowed rounded rectangles standing in for content.
+- Monospace as a costume for "technical" rather than for code, data, or measurement.
+- A system display face (Impact, Arial Black, the platform sans) as the display voice of an own-world page. Source and self-host a face whose character matches the approved lettering (Google: `.agents/skills/impeccable/scripts/impeccable font-fetch <Family>`); the closest installed font is a failure, not a fallback.
+- Unicode glyphs or emoji standing in for an icon system. Icons are drawn, from a real library or authored SVG, in one consistent stroke and weight.
+- Geometric masks standing in for organic contours. A circle, polygon, or radial-gradient cutout approximating a photographic subject's edge is the cheap version of the effect and reads worse than omitting it. Derive an alpha matte from the actual image, or produce a cut-out asset.
+- Light or dark picked by category. Pick it from the use scene: who, where, under what ambient light.
+
+- Tracking stops at -0.04em. -0.02 to -0.03em usually reads better.
+- Declare elevation once, border or shadow. A 1px border under a wide soft shadow is the ghost card. Card radii stay at 12–16px; pills are for small controls.
+- Real illustration or none. Sketch-style SVG scenes, `loose-sketch` / `doodle` class names, and `feTurbulence` grain read as amateur. This bans SVG imitating pictures, never SVG doing geometry: crisp vector shapes, diagrams, animated linework, and shader-driven effects remain first-class media. A shaded, perspectived, or figure-bearing illustration is a picture even in line-art style; geometry means shapes a session can specify exactly.
+- Backgrounds are surfaces, textured only from the subject's world. `repeating-linear-gradient` stripes and two-axis grid overlays need an actual canvas, map, blueprint, or measuring tool under them.
+- Claims and configuration come from supplied truth; label illustrative values honestly. Naming a concept and then ironizing it is not a claim.
+
+The floor holds the mechanics; it never picks the direction. With every check green, spend the page on the committed world, and when torn between refined and committed, commit.
+# Read
+
+`impeccable concept-seed --mode read` prints the two sections below as its MODE RULES block. On a Read surface the visitor came to understand something, so the page is first a document of its kind, framed by the world.
+
+## Directions
+
+The reader's question leads, and comprehension and wayfinding stay intact at every step. Documentation reads as documentation, a guide as a guide, an article as an article, a changelog as a changelog. The world owns the frame and serves the column. The frame is the masthead, the navigation rail, the ground, the title and section openers, and the way code, tables, and callouts are set: there the world's palette, type, and signature move commit fully, so the page could belong to no other product. The reading column inside it stays calm: a reading face, real contrast, a real measure, nothing performing behind the text. The world never supplies the reading order or replaces the navigation with something a reader has to learn. Documentation still reads as documentation, a guide as a guide, an article as an article.
+
+Candidates from the world's own publishing traditions transfer best: reference books, type specimens, timetables, field guides, technical manuals, scholarly apparatus, a newspaper's wayfinding. A tool, instrument, or fictional interface from the audience's world comes back as a costume on a page meant for reading: take from it only what transfers as type, palette, density, and a signature move, or replace it from your list. When a catalog world's source is itself an interface language, the same limit holds: it lends type, density, palette, and one signature move, while navigation and controls stay the standard ones for the platform.
+
+Write each direction's first viewport as the document's shell first: the navigation and where the reader stands in it, the title and the opening that answers or frames the reader's question, the reading column, and the way forward (contents, section headings, next and previous). Then name where the world owns the frame and where the signature move lives: a masthead, a coloured rail, a running head, a margin system, a numbering scheme, a way of setting code or tables. When you weigh fused challengers, product clarity includes how fast a reader finds and understands the answer.
+
+## Comps
+
+The comp is the document as the reader meets it: a frame the world owns, in the direction's committed palette and type, around a calm reading column at a real measure (on the web about 60 to 75 characters with body text near 16px; in a native app, the platform's body text style and its readable width), with headings in a clear hierarchy and the wayfinding that carries the reader through. Body text is set in a reading face with real contrast against its ground; a monospace face is for code, parameters, and small labels, never the running text or the headings by default. Code, tables, notes, and figures sit in the standard forms readers already know, set in the world's type and palette. The signature move is one system used where it earns its place, never a frame repeated around every element. The world never supplies the page's reading order, so a document never reads as a poster, a magazine cover, or a book photographed open.
+
+Prompt with the real material: the actual title, a real opening paragraph, real section names, and one example of the hardest content the surface holds (a code sample, a reference table, a diagram), never filler text.
+
+Comps two and three vary the reading structure and how the frame carries the world, never the column: the navigation model (sidebar tree, top tabs, inline contents), the column and margin system, how densely the reference material sits, and where the signature move appears. Each must be recognisably different from the first at thumbnail size; a variant only its prompt can tell apart adds no choice. A variant that pushes world material into the reading column makes reading harder and goes the wrong way.
+
+Self-check every render: can a reader tell where they are and where to go next, and read the body comfortably? Then cover the name: could this be any other product's documentation? If so, the frame has not taken the world; push the masthead, rail, ground, and openers further into it. If the render reads as an artifact of the world before it reads as a document, the world has reached the column; pull it back to the frame.
+playwright: False
+bs4: False
+lxml: True
+weasyprint: False
+PIL: True
+node: /usr/bin/node
+npm: /opt/hatch-image/bin/npm
+firefox: None
+wkhtmltoimage: None
+pdftoppm: /usr/bin/pdftoppm
+
+ succeeded in 117ms:
+/opt/muse/assets/spaces/ts-runtime/worker/src/playwright-audit.ts
+/opt/muse/assets/spaces/ts-runtime/worker/src/playwright-audit.test.ts
+/opt/meta-chromium/chrome
+/opt/meta-chromium/chrome_crashpad_handler
+/opt/meta-chromium/chrome_200_percent.pak
+/opt/meta-chromium/chrome_100_percent.pak
+/opt/muse/assets/spaces/ts-runtime/dist/playwright-audit.js
+/opt/hatch/skills/spaces/ts-runtime/worker/src/playwright-audit.ts
+/opt/hatch/skills/spaces/ts-runtime/worker/src/playwright-audit.test.ts
+/opt/muse/assets/spaces/ts-runtime/dist/node_modules/playwright-core/lib/vite/traceViewer/playwright-logo.svg
+/opt/muse/assets/spaces/ts-runtime/dist/node_modules/playwright-core/lib/vite/recorder/playwright-logo.svg
+/opt/muse/assets/spaces/ts-runtime/dist/node_modules/playwright-core/lib/server/playwright.js
+/opt/muse/assets/spaces/ts-runtime/dist/node_modules/playwright-core/lib/server/dispatchers/playwrightDispatcher.js
+/opt/muse/assets/spaces/ts-runtime/dist/node_modules/playwright-core/lib/server/chromium/chromiumSwitches.js
+/opt/muse/assets/spaces/ts-runtime/dist/node_modules/playwright-core/lib/server/chromium/chromium.js
+/opt/muse/assets/spaces/ts-runtime/dist/node_modules/playwright-core/lib/remote/playwrightServer.js
+/opt/muse/assets/spaces/ts-runtime/dist/node_modules/playwright-core/lib/remote/playwrightConnection.js
+/opt/muse/assets/spaces/ts-runtime/dist/node_modules/playwright-core/lib/client/playwright.js
+/opt/muse/assets/spaces/ts-runtime/dist/node_modules/playwright-core/bin/reinstall_chrome_stable_win.ps1
+/opt/muse/assets/spaces/ts-runtime/dist/node_modules/playwright-core/bin/reinstall_chrome_stable_mac.sh
+/opt/muse/assets/spaces/ts-runtime/dist/node_modules/playwright-core/bin/reinstall_chrome_stable_linux.sh
+/opt/muse/assets/spaces/ts-runtime/dist/node_modules/playwright-core/bin/reinstall_chrome_beta_win.ps1
+/opt/muse/assets/spaces/ts-runtime/dist/node_modules/playwright-core/bin/reinstall_chrome_beta_mac.sh
+/opt/muse/assets/spaces/ts-runtime/dist/node_modules/playwright-core/bin/reinstall_chrome_beta_linux.sh
+/opt/hatch/skills/spaces/ts-runtime/dist/playwright-audit.js
+/opt/hatch/skills/spaces/ts-runtime/dist/node_modules/playwright-core/lib/vite/traceViewer/playwright-logo.svg
+/opt/hatch/skills/spaces/ts-runtime/dist/node_modules/playwright-core/lib/vite/recorder/playwright-logo.svg
+/opt/hatch/skills/spaces/ts-runtime/dist/node_modules/playwright-core/lib/server/playwright.js
+/opt/hatch/skills/spaces/ts-runtime/dist/node_modules/playwright-core/lib/server/dispatchers/playwrightDispatcher.js
+/opt/hatch/skills/spaces/ts-runtime/dist/node_modules/playwright-core/lib/server/chromium/chromiumSwitches.js
+/opt/hatch/skills/spaces/ts-runtime/dist/node_modules/playwright-core/lib/server/chromium/chromium.js
+/opt/hatch/skills/spaces/ts-runtime/dist/node_modules/playwright-core/lib/remote/playwrightServer.js
+/opt/hatch/skills/spaces/ts-runtime/dist/node_modules/playwright-core/lib/remote/playwrightConnection.js
+/opt/hatch/skills/spaces/ts-runtime/dist/node_modules/playwright-core/lib/client/playwright.js
+/opt/hatch/skills/spaces/ts-runtime/dist/node_modules/playwright-core/bin/reinstall_chrome_stable_win.ps1
+/opt/hatch/skills/spaces/ts-runtime/dist/node_modules/playwright-core/bin/reinstall_chrome_stable_mac.sh
+/opt/hatch/skills/spaces/ts-runtime/dist/node_modules/playwright-core/bin/reinstall_chrome_stable_linux.sh
+/opt/hatch/skills/spaces/ts-runtime/dist/node_modules/playwright-core/bin/reinstall_chrome_beta_win.ps1
+/opt/hatch/skills/spaces/ts-runtime/dist/node_modules/playwright-core/bin/reinstall_chrome_beta_mac.sh
+/opt/hatch/skills/spaces/ts-runtime/dist/node_modules/playwright-core/bin/reinstall_chrome_beta_linux.sh
+
+codex
+ 
+**我正在确定页面设计**
+**我正在规划隐私页结构**
+**我正在更新模板元数据**
+**Adding template guidance**
+**我评估来源链接保留方案**
+**我准备检查页面离线请求**
+**我核对模板结构要求**
+codex
+已确认 Android 包名为 `com.zhiaiweiya.blockplanet`，会一并列入政策。页面将保留本地记录明细、删除方式和联系响应说明；模板沿用相同结构，并注明发布前须核对新游戏的实际数据行为。
+apply patch
+patch: completed
+/home/hatch/workspace/taptap-games/privacy-site/index.html
+/home/hatch/workspace/taptap-games/privacy-site/privacy-blockplanet.html
+diff --git a/index.html b/index.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..d86a4d38e8b047e833a0d6ac7e17d8b0207d2895
+--- /dev/null
++++ b/index.html
+@@ -0,0 +1,89 @@
++<!doctype html>
++<html lang="zh-CN">
++<head>
++  <meta charset="utf-8">
++  <meta name="viewport" content="width=device-width, initial-scale=1">
++  <meta name="color-scheme" content="light">
++  <meta name="description" content="知艾薇亚游戏工作室的游戏与隐私政策。查阅《方块星球大消除》的信息收集、本地存储及广告说明。">
++  <title>知艾薇亚｜游戏与隐私政策</title>
++  <style>
++    :root {
++      color-scheme: light;
++      --background: #f5f7f9;
++      --paper: #ffffff;
++      --ink: #203047;
++      --muted: #526177;
++      --accent: #226b54;
++      --line: #d8e0e7;
++    }
++    * { box-sizing: border-box; }
++    html { -webkit-text-size-adjust: 100%; }
++    body {
++      margin: 0;
++      background: var(--background);
++      color: var(--ink);
++      font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
++      font-size: 16px;
++      line-height: 1.85;
++      overflow-wrap: anywhere;
++    }
++    ::selection { background: #cbe9db; color: #163d31; }
++    a { color: var(--accent); text-underline-offset: 0.22em; }
++    a:hover { text-decoration-thickness: 2px; }
++    a:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; border-radius: 2px; }
++    .page { width: min(100%, 808px); margin: 0 auto; padding: 64px 24px 32px; }
++    header { padding-bottom: 36px; border-bottom: 1px solid var(--line); }
++    h1 { margin: 0 0 16px; font-size: clamp(28px, 6vw, 38px); line-height: 1.4; }
++    header p { margin: 0; color: var(--muted); }
++    main { padding: 36px 0 48px; }
++    h2 { margin: 0 0 20px; font-size: 21px; }
++    .games { margin: 0; padding: 0; list-style: none; }
++    .game { padding: 28px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
++    h3 { margin: 0; font-size: 23px; line-height: 1.5; }
++    .version { margin: 8px 0 14px; color: var(--muted); font-size: 14px; }
++    .description { margin: 0; }
++    .policy-link { display: inline-flex; align-items: center; min-height: 44px; margin-top: 16px; font-weight: 650; }
++    footer { padding-top: 24px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
++    footer p { margin: 0; }
++    footer a { display: inline-flex; align-items: center; min-height: 44px; }
++    @media (max-width: 480px) {
++      .page { padding: 36px 20px 24px; }
++      header { padding-bottom: 28px; }
++      main { padding: 28px 0 36px; }
++      .game { padding: 22px; }
++      h3 { font-size: 21px; }
++    }
++    @media print {
++      body { background: #fff; color: #000; }
++      .page { width: 100%; padding: 0; }
++      a { color: inherit; }
++      .game { break-inside: avoid; }
++    }
++  </style>
++</head>
++<body>
++  <div class="page">
++    <header>
++      <h1>知艾薇亚</h1>
++      <p>游戏工作室 · 游戏与隐私政策</p>
++    </header>
++    <main>
++      <section aria-labelledby="games-title">
++        <h2 id="games-title">我们的游戏</h2>
++        <ul class="games">
++          <li class="game">
++            <h3>方块星球大消除</h3>
++            <p class="version">离线单机 · 当前 v1 版本</p>
++            <p class="description">无需账号，游戏本身不收集个人信息。所有进度与设置仅保存在您的设备上；广告入口为明确标注的离线模拟。</p>
++            <a class="policy-link" href="privacy-blockplanet.html" aria-label="阅读《方块星球大消除》隐私政策">阅读隐私政策</a>
++          </li>
++        </ul>
++      </section>
++    </main>
++    <footer>
++      <p>开发者／运营方：知艾薇亚</p>
++      <p>联系我们：<a href="mailto:tolovelife@foxmail.com">tolovelife@foxmail.com</a></p>
++    </footer>
++  </div>
++</body>
++</html>
+diff --git a/privacy-blockplanet.html b/privacy-blockplanet.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..fc4e9542938f4d6381e80d5a81f045454e80f827
+--- /dev/null
++++ b/privacy-blockplanet.html
+@@ -0,0 +1,217 @@
++<!doctype html>
++<html lang="zh-CN">
++<head>
++  <meta charset="utf-8">
++  <meta name="viewport" content="width=device-width, initial-scale=1">
++  <meta name="color-scheme" content="light">
++  <meta name="description" content="知艾薇亚《方块星球大消除》隐私政策。当前 v1 不收集个人信息，无账号，游戏进度与设置仅存储在设备本地，广告为离线模拟。">
++  <title>《方块星球大消除》隐私政策｜知艾薇亚</title>
++  <style>
++    :root {
++      color-scheme: light;
++      --background: #f5f7f9;
++      --paper: #ffffff;
++      --ink: #203047;
++      --muted: #526177;
++      --accent: #226b54;
++      --line: #d8e0e7;
++      --summary: #edf5f0;
++    }
++    * { box-sizing: border-box; }
++    html { -webkit-text-size-adjust: 100%; }
++    body {
++      margin: 0;
++      background: var(--background);
++      color: var(--ink);
++      font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
++      font-size: 16px;
++      line-height: 1.9;
++      overflow-wrap: anywhere;
++    }
++    ::selection { background: #cbe9db; color: #163d31; }
++    a { color: var(--accent); text-underline-offset: 0.22em; }
++    a:hover { text-decoration-thickness: 2px; }
++    a:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; border-radius: 2px; }
++    .page { width: min(100%, 808px); margin: 0 auto; padding: 28px 24px 32px; }
++    .home-link { display: inline-flex; align-items: center; min-height: 44px; margin-bottom: 24px; font-size: 14px; }
++    article { padding: 36px 40px 40px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
++    h1 { margin: 0 0 24px; font-size: clamp(25px, 5.5vw, 32px); line-height: 1.5; }
++    h1 span { display: block; }
++    .metadata { margin: 0 0 24px; color: var(--muted); font-size: 14px; }
++    .metadata div { display: flex; flex-wrap: wrap; gap: 0 0.5em; }
++    .metadata dt, .metadata dd { margin: 0; }
++    time { font-variant-numeric: tabular-nums; }
++    p { margin: 0 0 16px; }
++    p:last-child { margin-bottom: 0; }
++    .summary { margin: 24px 0; padding: 20px; border-radius: 12px; background: var(--summary); }
++    .contents { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
++    .contents h2 { margin: 0 0 8px; font-size: 17px; }
++    .contents ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; margin: 0; padding: 0; list-style: none; }
++    .contents a { display: flex; align-items: center; min-height: 44px; padding: 5px 0; }
++    section { margin-top: 40px; scroll-margin-top: 20px; }
++    section h2 { margin: 0 0 16px; font-size: 22px; line-height: 1.5; }
++    h3 { margin: 28px 0 12px; font-size: 18px; line-height: 1.6; }
++    ul, ol { margin: 0 0 16px; padding-left: 1.5em; }
++    li + li { margin-top: 8px; }
++    .contents li + li { margin-top: 0; }
++    code { padding: 0.08em 0.25em; border-radius: 3px; background: var(--background); font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 0.9em; }
++    table { width: 100%; margin: 20px 0; border-collapse: collapse; text-align: left; font-size: 15px; }
++    caption { margin-bottom: 8px; color: var(--muted); text-align: left; }
++    th, td { padding: 12px; border: 1px solid var(--line); vertical-align: top; }
++    thead th { background: var(--background); }
++    thead th:first-child { width: 42%; }
++    tbody th { font-weight: 500; }
++    address { font-style: normal; }
++    address a { display: inline-flex; align-items: center; min-height: 44px; }
++    footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; margin-top: 24px; color: var(--muted); font-size: 14px; }
++    footer p { margin: 0; }
++    footer a { display: inline-flex; align-items: center; min-height: 44px; }
++    @media (max-width: 600px) {
++      .page { padding: 16px 16px 24px; }
++      .home-link { margin-bottom: 16px; }
++      article { padding: 24px 20px 28px; }
++      .summary { padding: 16px; }
++      section { margin-top: 32px; }
++      section h2 { font-size: 21px; }
++      th, td { padding: 10px 8px; }
++    }
++    @media (max-width: 380px) {
++      .page { padding-right: 12px; padding-left: 12px; }
++      article { padding-right: 16px; padding-left: 16px; }
++      .contents ul { grid-template-columns: 1fr; }
++    }
++    @media print {
++      body { background: #fff; color: #000; font-size: 11pt; }
++      .page { width: 100%; padding: 0; }
++      article { padding: 0; border: 0; }
++      a { color: inherit; }
++      .home-link, .contents, footer { display: none; }
++      h1, h2, h3, caption { break-after: avoid; }
++      tr { break-inside: avoid; }
++      .summary { padding: 12pt; border: 1px solid #aaa; }
++    }
++  </style>
++</head>
++<body>
++  <div class="page">
++    <a class="home-link" href="index.html">返回知艾薇亚 · 游戏与隐私政策</a>
++    <main>
++      <article aria-labelledby="policy-title">
++        <header id="top">
++          <h1 id="policy-title">《方块星球大消除》<span>隐私政策</span></h1>
++          <dl class="metadata">
++            <div><dt>生效日期：</dt><dd><time datetime="2026-11-21">2026-11-21</time></dd></div>
++            <div><dt>更新日期：</dt><dd><time datetime="2026-11-21">2026-11-21</time></dd></div>
++            <div><dt>开发者／运营方：</dt><dd>知艾薇亚</dd></div>
++            <div><dt>Android 包名：</dt><dd><code>com.zhiaiweiya.blockplanet</code></dd></div>
++          </dl>
++          <p>本政策适用于知艾薇亚提供的《方块星球大消除》Web／H5 游戏及 Android 游戏应用。请在使用前阅读本政策；您可以随时查看本政策并按下文方式联系我们。</p>
++          <div class="summary">
++            <p><strong>当前 v1 为离线单机游戏，无账号、无登录、无内购，不收集任何个人信息。</strong>所有游戏进度与设置仅通过 <code>localStorage</code> 保存在您的设备本地，不上传、不出售，也不与第三方共享。</p>
++            <p><strong>当前 v1 的游戏逻辑和模拟广告不发起网络请求。</strong>广告入口使用明确标注的离线模拟，未接入真实广告 SDK，不请求真实广告，也不采集设备或广告标识符。</p>
++          </div>
++          <p>未来如接入真实广告 SDK，我们会先更新政策，披露具体 SDK 及其数据处理规则，并提供相应选择。下文有关未来版本的说明不表示当前已经接入，也不构成您对未来数据处理的授权。</p>
++        </header>
++
++        <nav class="contents" aria-labelledby="contents-title">
++          <h2 id="contents-title">政策目录</h2>
++          <ul>
++            <li><a href="#collection">信息收集与使用</a></li>
++            <li><a href="#storage">本地存储</a></li>
++            <li><a href="#third-parties">第三方与广告</a></li>
++            <li><a href="#minors">未成年人</a></li>
++            <li><a href="#changes">政策变更</a></li>
++            <li><a href="#contact">联系我们</a></li>
++          </ul>
++        </nav>
++
++        <section id="collection" aria-labelledby="collection-title">
++          <h2 id="collection-title">信息收集与使用</h2>
++          <p>当前 v1 不要求您提供姓名、手机号、身份证号码、邮箱或任何账户资料；不读取通讯录、照片、通话记录、短信、精确位置、麦克风或摄像头，不采集设备唯一标识符、广告标识符、安装应用列表或用于跨应用跟踪的信息。</p>
++          <p>游戏不设置服务器账号、云存档、联网排行榜、聊天、社交分享、行为分析或远程崩溃上报服务。游戏逻辑和模拟广告不发起网络请求，不使用用于广告跟踪的 Cookie 或网络追踪器，也不为游玩申请上述敏感权限。音效与震动开关仅用于本机体验。</p>
++          <p>您访问 TapTap 商店、下载游戏，或使用浏览器、操作系统本身的服务时，相应平台可能按照各自的政策处理信息；这些平台独立提供的服务不属于游戏本体的数据收集。</p>
++        </section>
++
++        <section id="storage" aria-labelledby="storage-title">
++          <h2 id="storage-title">本地存储</h2>
++          <p>游戏使用浏览器或 Android WebView 的 <code>localStorage</code> 保存以下非联网游戏记录，全部保存在本机：</p>
++          <table>
++            <caption>本地保存的内容与用途</caption>
++            <thead>
++              <tr><th scope="col">本地内容</th><th scope="col">用途</th></tr>
++            </thead>
++            <tbody>
++              <tr><th scope="row">最高分、关卡解锁与闯关进度</th><td>展示个人成绩，继续本机的星球地图进度</td></tr>
++              <tr><th scope="row">每日挑战日期、种子相关进度与完成标记</th><td>提供当日挑战并记录是否完成</td></tr>
++              <tr><th scope="row">道具数量与奖励领取状态</th><td>正确使用道具，避免同一奖励重复领取</td></tr>
++              <tr><th scope="row">音效、震动等设置</th><td>保留您选择的游戏体验</td></tr>
++              <tr><th scope="row">新手引导状态、模拟广告频次与奖励防重复记录</th><td>避免引导中展示广告，执行展示限额与奖励规则</td></tr>
++            </tbody>
++          </table>
++          <p>这些记录不含账号身份资料，不发送给我们或第三方，也不用于跨设备识别。我们不提供云端同步或跨设备恢复。</p>
++          <p>记录通常保存至您清除站点／应用数据、卸载应用，或浏览器／系统清理本地存储；我们没有服务器副本可供恢复。操作系统或浏览器自行提供的备份、还原功能由其设置和政策管理。</p>
++          <h3>管理与删除本地记录</h3>
++          <p>您无需注册账户，因此无需办理账户注销。音效、震动等体验设置可在游戏设置中修改。</p>
++          <ul>
++            <li><strong>Web 版：</strong>通过浏览器的站点设置清除本游戏的站点数据。</li>
++            <li><strong>Android 版：</strong>通过系统“设置 → 应用 → 方块星球大消除 → 存储 → 清除数据”操作，具体名称以设备系统为准。</li>
++          </ul>
++          <p><strong>清除后，本机分数、进度、道具、设置及模拟广告记录将一并重置，通常无法恢复。</strong>仅退出游戏不会删除记录。</p>
++          <p>您可通过<a href="#contact">联系我们</a>咨询个人信息处理情况，或提出查阅、复制、更正、删除、撤回同意等请求。当前游戏内记录只在您的设备上，我们无法远程读取或代为修改；我们会说明可用的本地操作方式。未来涉及 SDK 处理的信息，将按届时披露的具体渠道协助您行使权利。</p>
++        </section>
++
++        <section id="third-parties" aria-labelledby="third-parties-title">
++          <h2 id="third-parties-title">第三方与广告</h2>
++          <p><strong>当前第三方广告、统计分析与跟踪 SDK 接入清单：无。</strong>当前 v1 的广告入口均为明确标注的离线模拟，不请求真实广告、不接入广告 SDK、不采集设备或广告标识符，也不向广告服务商发送数据。</p>
++          <p>当前 v1 没有向我们上传的个人信息，不向第三方共享、出售、转让或公开披露游戏内的个人信息，也不通过游戏进行个人信息的跨境传输。</p>
++          <p>未来如发生个人信息处理范围、合作方或传输安排的变化，我们会在实施前说明具体情况，并依法履行告知、取得同意等义务，不以本条概括授权代替具体披露。</p>
++          <h3>未来接入真实广告 SDK 时的说明</h3>
++          <p>未来可能选择 TapTap 广告（TapADN）或穿山甲广告（CSJ）作为广告服务提供方。<strong>当前二者均未接入，候选名称不代表当前发生数据共享。</strong>真实广告需要联网，但基础单机玩法仍可离线使用。</p>
++          <p>在实际接入的版本中，广告 SDK 在完成必要告知、取得相应同意并初始化后，可能在初始化、加载、展示及广告交互过程中采集以下信息：</p>
++          <ul>
++            <li>设备／广告标识符，例如 Android ID、OAID；具体是否处理及能否关闭取决于所选 SDK 版本与实际配置。</li>
++            <li>设备型号、系统版本、应用包名和版本、网络类型与 IP 地址等运行信息。</li>
++            <li>广告展示、点击、奖励验证、错误或性能信息，用于广告投放、效果统计、反作弊与服务稳定性。</li>
++          </ul>
++          <p>设备标识符及上述相关信息可能构成个人信息，不能因为没有姓名或账号就视为“无个人信息收集”。这份可能范围不代表当前采集，也不能代替正式接入清单。</p>
++          <p><strong>启用前我们会在游戏内隐私说明中列明实际 SDK 名称、版本、服务提供方及联系方式、处理目的、信息种类、采集方式与时机、保存期限、存储地点及权利行使方式，并提供第三方隐私政策链接。需要单独同意的事项将单独征求同意。</strong></p>
++          <h3>未来版本中的广告选择</h3>
++          <ol>
++            <li>同意前不初始化 SDK、不预加载广告、不读取或发送相关标识符。不同意不会影响经典、每日挑战和星球闯关等基础玩法；涉及真实广告的可选奖励及插屏不启用。</li>
++            <li>同意广告数据处理，不等于同意每次观看激励广告。复活、补充道具等入口仍须由您主动选择，提前说明奖励；取消观看不扣除已有道具或进度。</li>
++            <li>个性化广告默认关闭。若将来提供此功能，会另行说明并提供独立选择；关闭个性化不代表 SDK 完全不处理信息，非个性化广告也可能处理投放所需的信息。您可直接选择不启用真实广告。</li>
++            <li>接入 SDK 的版本会在“设置 → 隐私 → 广告与隐私”提供撤回选择。撤回后停止新的 SDK 调用和广告请求，清理可清理的缓存；不能立即停止相关处理的 SDK 将不启用。对第三方已经依法处理的数据，可通过披露的渠道或联系我们申请查阅、复制、删除等，我们会协助处理。</li>
++            <li>不因广告申请定位、通讯录、电话状态、相机、麦克风或安装应用列表等与核心玩法无关的可选权限；SDK 的实际最小采集范围会据实披露，无法满足保护要求时不启用该 SDK。</li>
++          </ol>
++        </section>
++
++        <section id="minors" aria-labelledby="minors-title">
++          <h2 id="minors-title">未成年人</h2>
++          <p>游戏内容面向全年龄，无暴力、血腥、赌博、内购或付费抽奖。建议未成年人在监护人指导下阅读本政策并合理安排游戏时间。</p>
++          <p><strong>当前 v1 不收集未成年人个人信息。</strong>未来真实广告对已知未成年人及年龄未知的用户默认关闭，不进行行为画像或个性化广告推送，不以领奖、复活或连续签到诱导未成年人授权、观看广告或消费。不会为解锁广告要求提交身份证或生日。</p>
++          <p>如果未来确有必要处理不满十四周岁未成年人的个人信息，将先制定专门的处理规则，并在取得父母或其他监护人同意后依法处理；不能满足条件时不启用相关处理。监护人如有疑问或认为存在不当处理，可联系我们核查。</p>
++        </section>
++
++        <section id="changes" aria-labelledby="changes-title">
++          <h2 id="changes-title">政策变更</h2>
++          <p>我们按最小必要原则设计本地存储，不建立个人信息数据库，不上传存档。请使用您信任的设备并管理好浏览器／系统权限；本地记录不应存放身份证号、联系方式等敏感资料。</p>
++          <p>政策更新会标明生效日期。涉及新增 SDK、处理目的、信息种类、接收方或其他重要变化时，我们会在变更处理发生前显著告知，依法重新征求必要同意。您可拒绝新增的广告数据处理并继续使用基础离线玩法。</p>
++        </section>
++
++        <section id="contact" aria-labelledby="contact-title">
++          <h2 id="contact-title">联系我们</h2>
++          <address>
++            <p>开发者／运营方：知艾薇亚<br>隐私联系邮箱：<a href="mailto:tolovelife@foxmail.com">tolovelife@foxmail.com</a></p>
++          </address>
++          <p>请在来信中说明问题及您希望的处理方式，不必提供身份证号码或其他敏感信息。您主动来信提供的邮箱、问题描述及附件，仅用于沟通和处理该请求，按处理所需的最短期限保留；这类主动联系不属于游戏自动采集。</p>
++          <p>我们将在收到请求后 <strong>15 个工作日内</strong>答复；需要进一步核实的，会说明原因和处理进度。</p>
++        </section>
++      </article>
++    </main>
++    <footer>
++      <p><a href="index.html">知艾薇亚 · 游戏与隐私政策</a></p>
++      <a href="#top">返回顶部</a>
++    </footer>
++  </div>
++</body>
++</html>
+
+codex
+ 
+**Generating privacy policy template**
+**我生成隐私政策模板**
+**我尝试启动浏览器**
+exec
+/bin/bash -lc "python3 - <<'PY'
+from pathlib import Path
+
+source = Path('privacy-blockplanet.html').read_text(encoding='utf-8')
+template = source.replace('方块星球大消除', '{{GAME_NAME}}').replace('com.zhiaiweiya.blockplanet', '{{PACKAGE}}').replace('2026-11-21', '{{DATE}}')
+instructions = '''<"'!--
+离线游戏隐私政策模板，发布前请核对：
+1. 将 {{GAME_NAME}} 替换为游戏名称（不含书名号），{{PACKAGE}} 替换为实际 Android 包名，
+   {{DATE}} 替换为 YYYY-MM-DD 格式的生效／更新日期。
+2. 本模板仅适用于与本政策一致的离线 v1：不收集个人信息、无账号、仅使用本机 localStorage、
+   游戏逻辑不联网、广告为明确标注的离线模拟、无广告或统计 SDK、无数据共享。
+3. 请按新游戏实际情况核对本地存储项目、玩法、平台、版本、删除路径、未成年人说明和未来广告计划。
+   不适用的内容应修改或删除，不得直接套用本模板宣称尚未确认的数据处理行为。
+4. 联系邮箱与开发者默认为知艾薇亚；如运营方或联系方式发生变化，请同步更新。
+-->
+'"'''
+template = template.replace('<"'!doctype html>'"\\n', '<"'!doctype html>'"\\n' + instructions, 1)
+Path('TEMPLATE.html').write_text(template, encoding='utf-8')
+print('Created TEMPLATE.html with GAME_NAME, PACKAGE and DATE placeholders.')
+PY" in /home/hatch/workspace/taptap-games/privacy-site
+ succeeded in 0ms:
+Created TEMPLATE.html with GAME_NAME, PACKAGE and DATE placeholders.
+
+exec
+/bin/bash -lc "node - <<'JS'
+const { chromium } = require('/opt/muse/assets/spaces/ts-runtime/dist/node_modules/playwright-core');
+(async () => {
+  const browser = await chromium.launch({
+    executablePath: '/opt/meta-chromium/chrome',
+    headless: true,
+    args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-breakpad', '--disable-crash-reporter']
+  });
+  const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  await page.goto('file:///home/hatch/workspace/taptap-games/privacy-site/privacy-blockplanet.html');
+  console.log(await page.title());
+  await page.screenshot({path:'/tmp/privacy-blockplanet-mobile.png',fullPage:true});
+  await browser.close();
+})().catch(error => { console.error(error.message); process.exitCode = 1; });
+JS" in /home/hatch/workspace/taptap-games/privacy-site
+exec
+/bin/bash -lc "python3 - <<'PY'
+from pathlib import Path
+from lxml import html
+from urllib.parse import urlsplit, unquote
+import re
+
+root = Path.cwd()
+required = ['信息收集与使用', '本地存储', '第三方与广告', '未成年人', '政策变更', '联系我们']
+for name in ('index.html', 'privacy-blockplanet.html', 'TEMPLATE.html'):
+    path = root / name
+    raw = path.read_text(encoding='utf-8')
+    parser = html.HTMLParser()
+    doc = html.fromstring(raw, parser=parser)
+    assert not parser.error_log, (name, list(parser.error_log))
+    assert doc.get('lang') == 'zh-CN', name
+    assert doc.xpath('//meta[@charset=\"utf-8\"]'), name
+    assert doc.xpath('//meta[@name=\"viewport\"]'), name
+    assert len(doc.xpath('//h1')) == 1, name
+    assert len(doc.xpath('//style')) == 1, name
+    assert not doc.xpath('//script | //link | //img | //iframe | //object | //embed | //form | //audio | //video | //source | //base'), name
+    css = doc.xpath('//style')[0].text
+    assert not re.search(r'@import|url\\s*\\(', css, re.I), name
+    ids = doc.xpath('//@id')
+    assert len(ids) == len(set(ids)), name
+    for anchor in doc.xpath('//a[@href]'):
+        link = urlsplit(anchor.get('href'))
+        assert link.scheme in ('', 'mailto'), (name, link)
+        if link.scheme == 'mailto':
+            assert link.path == 'tolovelife@foxmail.com', (name, link.path)
+        elif link.path:
+            assert (root / unquote(link.path)).is_file(), (name, link.path)
+        elif link.fragment:
+            assert link.fragment in ids, (name, link.fragment)
+    if name "'!= '"'index.html':
+        headings = [''.join(h.itertext()) for h in doc.xpath('//section/h2')]
+        assert headings == required, (name, headings)
+        text_content = doc.text_content()
+        for fact in ('localStorage', '不收集任何个人信息', '离线模拟', '无账号', '知艾薇亚', 'tolovelife@foxmail.com'):
+            assert fact in text_content, (name, fact)
+        assert len(doc.xpath('//table/tbody/tr')) == 5, name
+    if name "'!= '"'TEMPLATE.html':
+        assert '{{' not in raw and '待填写' not in raw, name
+    print(f'{name}: valid structure, local links, inline CSS, no resource dependencies ({path.stat().st_size:,} bytes)')
+
+policy = (root / 'privacy-blockplanet.html').read_text(encoding='utf-8')
+template = (root / 'TEMPLATE.html').read_text(encoding='utf-8')
+assert set(re.findall(r'\\{\\{[A-Z_]+\\}\\}', template)) == {'{{GAME_NAME}}', '{{PACKAGE}}', '{{DATE}}'}
+restored = re.sub(r'<"'!--.*?-->'"\\n', '', template, flags=re.S).replace('{{GAME_NAME}}', '方块星球大消除').replace('{{PACKAGE}}', 'com.zhiaiweiya.blockplanet').replace('{{DATE}}', '2026-11-21')
+assert restored == policy
+assert '2026-11-21' in policy and 'com.zhiaiweiya.blockplanet' in policy
+assert len(html.fromstring((root / 'index.html').read_text()).xpath('//ul[@class=\"games\"]/li')) == 1
+print('Template exactly matches the policy after placeholder substitution. Studio lists one game.')
+PY" in /home/hatch/workspace/taptap-games/privacy-site
+ exited 1 in 53ms:
+Traceback (most recent call last):
+  File "<stdin>", line 13, in <module>
+AssertionError: ('index.html', [<string>:66:12:ERROR:HTML:HTML_UNKNOWN_TAG: Tag header invalid, <string>:70:10:ERROR:HTML:HTML_UNKNOWN_TAG: Tag main invalid, <string>:71:45:ERROR:HTML:HTML_UNKNOWN_TAG: Tag section invalid, <string>:83:12:ERROR:HTML:HTML_UNKNOWN_TAG: Tag footer invalid])
+
+ exited 1 in 785ms:
+browserType.launch: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /opt/meta-chromium/chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --disable-dev-shm-usage --disable-breakpad --disable-crash-reporter --user-data-dir=/tmp/playwright_chromiumdev_profile-E37QGt --remote-debugging-pipe --no-startup-window
+<launched> pid=15
+[pid=15][err] [1121/235446.917028:ERROR:chrome/app/chrome_main_delegate.cc:1283] Hatch WebGL domain policy is required for browser startup
+Call log:
+[2m  - <launching> /opt/meta-chromium/chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --disable-dev-shm-usage --disable-breakpad --disable-crash-reporter --user-data-dir=/tmp/playwright_chromiumdev_profile-E37QGt --remote-debugging-pipe --no-startup-window[22m
+[2m  - <launched> pid=15[22m
+[2m  - [pid=15][err] [1121/235446.917028:ERROR:chrome/app/chrome_main_delegate.cc:1283] Hatch WebGL domain policy is required for browser startup[22m
+[2m  - [pid=15] <gracefully close start>[22m
+[2m  - [pid=15] <kill>[22m
+[2m  - [pid=15] <will force kill>[22m
+[2m  - [pid=15] <process did exit: exitCode=13, signal=null>[22m
+[2m  - [pid=15] starting temporary directories cleanup[22m
+[2m  - [pid=15] finished temporary directories cleanup[22m
+[2m  - [pid=15] <gracefully close end>[22m
+
+
+codex
+ 
+**Locating browser launch settings**
+**Checking browser launch settings**
+**Checking title wrapping**
+exec
+/bin/bash -lc "python3 - <<'PY'
+from pathlib import Path
+from lxml import html
+from urllib.parse import urlsplit, unquote
+import re
+
+root = Path.cwd()
+required = ['信息收集与使用', '本地存储', '第三方与广告', '未成年人', '政策变更', '联系我们']
+for name in ('index.html', 'privacy-blockplanet.html', 'TEMPLATE.html'):
+    path = root / name
+    raw = path.read_text(encoding='utf-8')
+    parser = html.HTMLParser()
+    doc = html.fromstring(raw, parser=parser)
+    # libxml2's HTML4 parser reports semantic HTML5 tags as unknown.
+    errors = [error for error in parser.error_log if error.type_name "'!= '"'HTML_UNKNOWN_TAG']
+    assert not errors, (name, errors)
+    assert doc.get('lang') == 'zh-CN', name
+    assert doc.xpath('//meta[@charset=\"utf-8\"]'), name
+    assert doc.xpath('//meta[@name=\"viewport\"]'), name
+    assert len(doc.xpath('//h1')) == 1, name
+    assert len(doc.xpath('//style')) == 1, name
+    assert not doc.xpath('//script | //link | //img | //iframe | //object | //embed | //form | //audio | //video | //source | //base'), name
+    css = doc.xpath('//style')[0].text
+    assert not re.search(r'@import|url\\s*\\(', css, re.I), name
+    ids = doc.xpath('//@id')
+    assert len(ids) == len(set(ids)), name
+    for anchor in doc.xpath('//a[@href]'):
+        link = urlsplit(anchor.get('href'))
+        assert link.scheme in ('', 'mailto'), (name, link)
+        if link.scheme == 'mailto':
+            assert link.path == 'tolovelife@foxmail.com', (name, link.path)
+        elif link.path:
+            assert (root / unquote(link.path)).is_file(), (name, link.path)
+        elif link.fragment:
+            assert link.fragment in ids, (name, link.fragment)
+    if name "'!= '"'index.html':
+        headings = [''.join(h.itertext()) for h in doc.xpath('//section/h2')]
+        assert headings == required, (name, headings)
+        text_content = doc.text_content()
+        for fact in ('localStorage', '不收集任何个人信息', '离线模拟', '无账号', '知艾薇亚', 'tolovelife@foxmail.com'):
+            assert fact in text_content, (name, fact)
+        assert len(doc.xpath('//table/tbody/tr')) == 5, name
+    if name "'!= '"'TEMPLATE.html':
+        assert '{{' not in raw and '待填写' not in raw, name
+    print(f'{name}: structure, local links, required content and inline-only resources checked ({path.stat().st_size:,} bytes)')
+
+policy = (root / 'privacy-blockplanet.html').read_text(encoding='utf-8')
+template = (root / 'TEMPLATE.html').read_text(encoding='utf-8')
+assert set(re.findall(r'\\{\\{[A-Z_]+\\}\\}', template)) == {'{{GAME_NAME}}', '{{PACKAGE}}', '{{DATE}}'}
+restored = re.sub(r'<"'!--.*?-->'"\\n', '', template, flags=re.S).replace('{{GAME_NAME}}', '方块星球大消除').replace('{{PACKAGE}}', 'com.zhiaiweiya.blockplanet').replace('{{DATE}}', '2026-11-21')
+assert restored == policy
+assert '2026-11-21' in policy and 'com.zhiaiweiya.blockplanet' in policy
+assert len(html.fromstring((root / 'index.html').read_text()).xpath('//ul[@class=\"games\"]/li')) == 1
+print('Template exactly matches the policy after placeholder substitution. Studio lists one game.')
+
+def luminance(color):
+    channels = [int(color[i:i+2], 16) / 255 for i in (1, 3, 5)]
+    channels = [x / 12.92 if x <= 0.04045 else ((x + 0.055) / 1.055) ** 2.4 for x in channels]
+    return sum(x * w for x, w in zip(channels, (.2126, .7152, .0722)))
+for color in ('#203047', '#526177', '#226b54'):
+    for background in ('#ffffff', '#f5f7f9', '#edf5f0'):
+        a, b = sorted((luminance(color), luminance(background)))
+        contrast = (b + .05) / (a + .05)
+        assert contrast >= 4.5, (color, background, contrast)
+print('Body, secondary text and links exceed WCAG AA 4.5:1 contrast on all page surfaces.')
+PY" in /home/hatch/workspace/taptap-games/privacy-site
+exec
+/bin/bash -lc "rg -n -i 'webgl.{0,50}policy|hatch.{0,30}webgl|WEBGL_DOMAIN' /opt/muse/assets/spaces/ts-runtime/worker/src /opt/muse/assets/spaces/ts-runtime/dist /opt/hatch/skills/spaces /opt/hatch-image/bin /opt/meta-chromium -g '*.ts' -g '*.js' -g '*.sh' -g '*.json' -g '"'!*.map'"' -g '"'!node_modules/**'"' -m 5 2>/dev/null | head -70" in /home/hatch/workspace/taptap-games/privacy-site
+ succeeded in 137ms:
+index.html: structure, local links, required content and inline-only resources checked (3,685 bytes)
+privacy-blockplanet.html: structure, local links, required content and inline-only resources checked (17,379 bytes)
+TEMPLATE.html: structure, local links, required content and inline-only resources checked (18,160 bytes)
+Template exactly matches the policy after placeholder substitution. Studio lists one game.
+Body, secondary text and links exceed WCAG AA 4.5:1 contrast on all page surfaces.
+
+ succeeded in 873ms:
+/opt/hatch/skills/spaces/ts-runtime/worker/src/playwright-audit.ts:1954:      "/var/lib/hatch-browser/rootfs-base/usr/share/hatch/chromium/webgl-allowed-domains.txt";
+/opt/hatch/skills/spaces/ts-runtime/worker/src/playwright-audit.ts:1966:        `--hatch-webgl-allowed-domains-file=${policyPath}`,
+/opt/hatch/skills/spaces/ts-runtime/worker/src/playwright-audit.ts:1967:        `--hatch-webgl-allowed-domains-sha256=${createHash("sha256").update(policy).digest("hex")}`,
+/opt/muse/assets/spaces/ts-runtime/worker/src/playwright-audit.ts:1954:      "/var/lib/hatch-browser/rootfs-base/usr/share/hatch/chromium/webgl-allowed-domains.txt";
+/opt/muse/assets/spaces/ts-runtime/worker/src/playwright-audit.ts:1966:        `--hatch-webgl-allowed-domains-file=${policyPath}`,
+/opt/muse/assets/spaces/ts-runtime/worker/src/playwright-audit.ts:1967:        `--hatch-webgl-allowed-domains-sha256=${createHash("sha256").update(policy).digest("hex")}`,
+/opt/hatch/skills/spaces/ts-runtime/worker/src/playwright-audit.test.ts:31:    "/var/lib/hatch-browser/rootfs-base/usr/share/hatch/chromium/webgl-allowed-domains.txt";
+/opt/hatch/skills/spaces/ts-runtime/worker/src/playwright-audit.test.ts:34:    args.filter((arg) => arg.startsWith("--hatch-webgl-"));
+/opt/hatch/skills/spaces/ts-runtime/worker/src/playwright-audit.test.ts:47:        `--hatch-webgl-allowed-domains-file=${policyPath}`,
+/opt/hatch/skills/spaces/ts-runtime/worker/src/playwright-audit.test.ts:48:        "--hatch-webgl-allowed-domains-sha256=eb8a85b613504187a022da91733c92d3472c04ec6c0ab34e1ea1234e51a85186",
+/opt/muse/assets/spaces/ts-runtime/worker/src/playwright-audit.test.ts:31:    "/var/lib/hatch-browser/rootfs-base/usr/share/hatch/chromium/webgl-allowed-domains.txt";
+/opt/muse/assets/spaces/ts-runtime/worker/src/playwright-audit.test.ts:34:    args.filter((arg) => arg.startsWith("--hatch-webgl-"));
+/opt/muse/assets/spaces/ts-runtime/worker/src/playwright-audit.test.ts:47:        `--hatch-webgl-allowed-domains-file=${policyPath}`,
+/opt/muse/assets/spaces/ts-runtime/worker/src/playwright-audit.test.ts:48:        "--hatch-webgl-allowed-domains-sha256=eb8a85b613504187a022da91733c92d3472c04ec6c0ab34e1ea1234e51a85186",
+/opt/muse/assets/spaces/ts-runtime/dist/probe-ui.js:1413:    const policyPath = "/var/lib/hatch-browser/rootfs-base/usr/share/hatch/chromium/webgl-allowed-domains.txt";
+/opt/muse/assets/spaces/ts-runtime/dist/probe-ui.js:1424:        `--hatch-webgl-allowed-domains-file=${policyPath}`,
+/opt/muse/assets/spaces/ts-runtime/dist/probe-ui.js:1425:        `--hatch-webgl-allowed-domains-sha256=${createHash("sha256").update(policy).digest("hex")}`
+/opt/hatch/skills/spaces/ts-runtime/dist/probe-ui.js:1413:    const policyPath = "/var/lib/hatch-browser/rootfs-base/usr/share/hatch/chromium/webgl-allowed-domains.txt";
+/opt/hatch/skills/spaces/ts-runtime/dist/probe-ui.js:1424:        `--hatch-webgl-allowed-domains-file=${policyPath}`,
+/opt/hatch/skills/spaces/ts-runtime/dist/probe-ui.js:1425:        `--hatch-webgl-allowed-domains-sha256=${createHash("sha256").update(policy).digest("hex")}`
+/opt/hatch/skills/spaces/ts-runtime/dist/playwright-audit.js:2124:    const policyPath = "/var/lib/hatch-browser/rootfs-base/usr/share/hatch/chromium/webgl-allowed-domains.txt";
+/opt/hatch/skills/spaces/ts-runtime/dist/playwright-audit.js:2135:        `--hatch-webgl-allowed-domains-file=${policyPath}`,
+/opt/hatch/skills/spaces/ts-runtime/dist/playwright-audit.js:2136:        `--hatch-webgl-allowed-domains-sha256=${createHash("sha256").update(policy).digest("hex")}`
+/opt/muse/assets/spaces/ts-runtime/dist/playwright-audit.js:2124:    const policyPath = "/var/lib/hatch-browser/rootfs-base/usr/share/hatch/chromium/webgl-allowed-domains.txt";
+/opt/muse/assets/spaces/ts-runtime/dist/playwright-audit.js:2135:        `--hatch-webgl-allowed-domains-file=${policyPath}`,
+/opt/muse/assets/spaces/ts-runtime/dist/playwright-audit.js:2136:        `--hatch-webgl-allowed-domains-sha256=${createHash("sha256").update(policy).digest("hex")}`
+
+codex
+ 
+**Checking rendering setup**
+exec
+/bin/bash -lc "sed -n '1925,1985p' /opt/muse/assets/spaces/ts-runtime/worker/src/playwright-audit.ts
+ls -l /var/lib/hatch-browser/rootfs-base/usr/share/hatch/chromium/webgl-allowed-domains.txt" in /home/hatch/workspace/taptap-games/privacy-site
+ succeeded in 0ms:
+export function buildLaunchOptions(
+  executablePath: string | null,
+  proxyServer: string | null,
+  proxyAuthToken: string | null,
+  _proxyAuthUsername: string | null,
+): AuditLaunchOptions {
+  if (process.platform === "linux" && executablePath !== IMAGE_CHROME_PATH) {
+    throw new Error(`Linux artifact rendering requires ${IMAGE_CHROME_PATH}`);
+  }
+  const launchOptions: AuditLaunchOptions = {
+    headless: true,
+    args: [...CHROME_HARDENING_ARGS],
+  };
+  // Remove Chrome's dependency on cell DNS for the proxy endpoint and the
+  // DIRECT phone-home hosts (see buildHostResolverRulesArg). Without this the
+  // resolver hangs on dead cell DNS and times out even the already-governed
+  // proxied self-FQDN navigation. Real hostnames carry no rule and resolve
+  // proxy-side over CONNECT, so the explicit-proxy egress posture is unchanged.
+  const hostResolverRulesArg = buildHostResolverRulesArg(proxyServer);
+  if (hostResolverRulesArg !== null) {
+    launchOptions.args = [...(launchOptions.args ?? []), hostResolverRulesArg];
+  }
+  if (executablePath !== null) {
+    launchOptions.executablePath = executablePath;
+  }
+  if (executablePath === "/opt/meta-chromium/chrome") {
+    // Trust only the measured immutable image policy, bound read-only at this
+    // same path inside the cell, never a policy in the artifact's writable tree.
+    const policyPath =
+      "/var/lib/hatch-browser/rootfs-base/usr/share/hatch/chromium/webgl-allowed-domains.txt";
+    let policy: Buffer | null = null;
+    try {
+      policy = fs.readFileSync(policyPath);
+    } catch (err) {
+      // Images with legacy Chromium do not carry this policy. Other failures
+      // must abort launch rather than silently dropping the required policy.
+      if ((err as NodeJS.ErrnoException).code !== "ENOENT") throw err;
+    }
+    if (policy !== null) {
+      launchOptions.args = [
+        ...(launchOptions.args ?? []),
+        `--hatch-webgl-allowed-domains-file=${policyPath}`,
+        `--hatch-webgl-allowed-domains-sha256=${createHash("sha256").update(policy).digest("hex")}`,
+      ];
+    }
+  }
+  if (proxyServer !== null) {
+    // Routes Chromium through Sentinel's HTTP/HTTPS forward proxy so
+    // CONNECT can tunnel out to the VM's own ingress-rev-proxy :4431 `/spaces`
+    // edge (the nginx replacement). Without this Chromium would try to dial it
+    // directly and the cell's egress firewall drops the TCP SYN.
+    //
+    // When a runtime egress token is present, main()/serve() must route Chromium
+    // through the transport ledger (which injects the credential on its own
+    // upstream hop) and clear proxyAuthToken before this point. Passing the
+    // token to Playwright would put it inside Chromium, where DEBUG=pw:protocol
+    // can serialize the proxy-auth exchange to stderr.
+    if (proxyAuthToken !== null) {
+      throw new Error(
+        "proxy auth token must be injected by the transport ledger, not passed to Chromium",
+      );
+-rw-r--r-- 1 nobody nogroup 27 Nov 21 18:35 /var/lib/hatch-browser/rootfs-base/usr/share/hatch/chromium/webgl-allowed-domains.txt
+
+codex
+ 
+**Preparing responsive checks**
+**Running responsive checks**
+codex
+三个文件已生成。静态检查已通过：政策包含全部六个指定章节，链接有效、模板占位符一致，且没有脚本或外部资源依赖。我正在检查不同屏幕宽度下的显示效果。
+exec
+/bin/bash -lc "cat > /tmp/privacy-site-render-check.cjs <<'JS'
+const { chromium } = require('/opt/muse/assets/spaces/ts-runtime/dist/node_modules/playwright-core');
+const { readFileSync } = require('node:fs');
+const { createHash } = require('node:crypto');
+const assert = require('node:assert/strict');
+const policyPath = '/var/lib/hatch-browser/rootfs-base/usr/share/hatch/chromium/webgl-allowed-domains.txt';
+const policyHash = createHash('sha256').update(readFileSync(policyPath)).digest('hex');
+(async () => {
+  const browser = await chromium.launch({
+    executablePath: '/opt/meta-chromium/chrome',
+    headless: true,
+    args: [
+      '--no-sandbox', '--disable-dev-shm-usage', '--disable-breakpad', '--disable-crash-reporter',
+      "'`--hatch-webgl-allowed-domains-file=${policyPath}`,
+      `--hatch-webgl-allowed-domains-sha256=${policyHash}`
+    ]
+  });
+  try {
+    const context = await browser.newContext({offline: true});
+    const page = await context.newPage();
+    const network = [];
+    const failures = [];
+    page.on('"'request', request => { if (/"'^https?:/.test(request.url())) network.push(request.url()); });
+    page.on('"'pageerror', error => failures.push(error.message));
+    for (const file of ['index.html', 'privacy-blockplanet.html', 'TEMPLATE.html']) {
+      for (const width of [320, 390, 768, 1280]) {
+        await page.setViewportSize({width, height: 844});
+        await page.goto("'`file://${process.cwd()}/${file}`);
+        const info = await page.evaluate(() => {
+          const body = getComputedStyle(document.body);
+          return {
+            overflow: document.documentElement.scrollWidth > innerWidth,
+            fontSize: body.fontSize,
+            lineHeight: body.lineHeight,
+            headings: [...document.querySelectorAll('"'section > h2')].map(x => x.textContent.trim()),
+            stylesheetCount: document.styleSheets.length,
+            externalSheets: [...document.styleSheets].filter(x => x.href).length,
+            articleWidth: document.querySelector('article')?.getBoundingClientRect().width
+          };
+        });
+        assert.equal(info.overflow, false, "'`${file} overflows at ${width}px`);
+        assert.equal(info.fontSize, '"'16px');
+        assert.equal(info.stylesheetCount, 1);
+        assert.equal(info.externalSheets, 0);
+        console.log("'`${file} @ ${width}px: no overflow; inline styles; 16px body text`);
+        if ((width === 390 || width === 1280) && file !== '"'TEMPLATE.html') {
+          const prefix = file === 'index.html' ? 'privacy-studio' : 'privacy-blockplanet';
+          await page.screenshot({path: "'`/tmp/${prefix}-${width}.png`, fullPage: file === '"'index.html'});
+        }
+      }
+    }
+    await page.setViewportSize({width:390,height:844});
+    await page.goto("'`file://${process.cwd()}/index.html`);
+    await page.getByRole('"'link', {name:'阅读《方块星球大消除》隐私政策'}).click();
+    assert(page.url().endsWith('/privacy-blockplanet.html'));
+    await page.getByRole('navigation').getByRole('link', {name:'联系我们',exact:true}).click();
+    assert(page.url().endsWith('#contact'));
+    assert(await page.locator('#contact').isInViewport());
+    assert.equal(await page.locator('address a').getAttribute('href'),'mailto:tolovelife@foxmail.com');
+    await page.getByRole('link', {name:'返回顶部',exact:true}).click();
+    assert(page.url().endsWith('#top'));
+    await page.screenshot({path:'/tmp/privacy-blockplanet-mobile-full.png',fullPage:true});
+    await page.emulateMedia({media:'print'});
+    assert.equal(await page.locator('.contents').isVisible(),false);
+    assert.equal(await page.locator('.home-link').isVisible(),false);
+    assert.equal(network.length,0,"'`Unexpected network requests: ${network.join('"', ')}"'`);
+    assert.equal(failures.length,0,`Page errors: ${failures.join('"', ')}"'`);
+    console.log('"'Offline navigation, policy anchors, contact, print stylesheet and zero HTTP(S) requests passed.');
+  } finally {
+    await browser.close();
+  }
+})().catch(error => { console.error(error.stack || error.message); process.exitCode=1; });
+JS
+node /tmp/privacy-site-render-check.cjs" in /home/hatch/workspace/taptap-games/privacy-site
+ exited 1 in 588ms:
+browserType.launch: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /opt/meta-chromium/chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --disable-dev-shm-usage --disable-breakpad --disable-crash-reporter --hatch-webgl-allowed-domains-file=/var/lib/hatch-browser/rootfs-base/usr/share/hatch/chromium/webgl-allowed-domains.txt --hatch-webgl-allowed-domains-sha256=8097045f0459c96c4cdc76e3a1af4e0f43f640b4b59c43d6db35e3641c0264c6 --user-data-dir=/tmp/playwright_chromiumdev_profile-7oRKUb --remote-debugging-pipe --no-startup-window
+<launched> pid=15
+[pid=15][err] [15:15:1121/235617.634106:ERROR:third_party/crashpad/crashpad/util/linux/socket.cc:45] setsockopt: Operation not permitted (1)
+Call log:
+[2m  - <launching> /opt/meta-chromium/chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --disable-dev-shm-usage --disable-breakpad --disable-crash-reporter --hatch-webgl-allowed-domains-file=/var/lib/hatch-browser/rootfs-base/usr/share/hatch/chromium/webgl-allowed-domains.txt --hatch-webgl-allowed-domains-sha256=8097045f0459c96c4cdc76e3a1af4e0f43f640b4b59c43d6db35e3641c0264c6 --user-data-dir=/tmp/playwright_chromiumdev_profile-7oRKUb --remote-debugging-pipe --no-startup-window[22m
+[2m  - <launched> pid=15[22m
+[2m  - [pid=15][err] [15:15:1121/235617.634106:ERROR:third_party/crashpad/crashpad/util/linux/socket.cc:45] setsockopt: Operation not permitted (1)[22m
+[2m  - [pid=15] <gracefully close start>[22m
+[2m  - [pid=15] <kill>[22m
+[2m  - [pid=15] <will force kill>[22m
+[2m  - [pid=15] <process did exit: exitCode=null, signal=SIGTRAP>[22m
+[2m  - [pid=15] starting temporary directories cleanup[22m
+[2m  - [pid=15] finished temporary directories cleanup[22m
+[2m  - [pid=15] <gracefully close end>[22m
+
+    at /tmp/privacy-site-render-check.cjs:8:34
+    at Object.<anonymous> (/tmp/privacy-site-render-check.cjs:71:3)
+
+codex
+ 
+**Browser verification is blocked**
+**Checking mobile page layout**
+**Reviewing privacy template**
+**Checking source path**
+**Verifying page structure**
+**Checking layout details**
+**Verifying package fit**
+codex
+Created:
+
+- [index.html](/home/hatch/workspace/taptap-games/privacy-site/index.html) — studio and game listing.
+- [privacy-blockplanet.html](/home/hatch/workspace/taptap-games/privacy-site/privacy-blockplanet.html) — complete Chinese policy.
+- [TEMPLATE.html](/home/hatch/workspace/taptap-games/privacy-site/TEMPLATE.html) — matching placeholder template.
+
+All use inline CSS with no external resources. Content, links, placeholders, and text contrast checks passed. Browser preview was blocked by the sandbox.
+tokens used
+198,307
+Created:
+
+- [index.html](/home/hatch/workspace/taptap-games/privacy-site/index.html) — studio and game listing.
+- [privacy-blockplanet.html](/home/hatch/workspace/taptap-games/privacy-site/privacy-blockplanet.html) — complete Chinese policy.
+- [TEMPLATE.html](/home/hatch/workspace/taptap-games/privacy-site/TEMPLATE.html) — matching placeholder template.
+
+All use inline CSS with no external resources. Content, links, placeholders, and text contrast checks passed. Browser preview was blocked by the sandbox.
